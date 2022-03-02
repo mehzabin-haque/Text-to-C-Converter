@@ -16,17 +16,19 @@
          <children>
             <AnchorPane layoutX="170.0" layoutY="25.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: white;">
                <children>
-                  <TextField fx:id="email_id" layoutX="115.0" layoutY="229.0" prefHeight="42.0" prefWidth="270.0" promptText="Email ID" style="-fx-background-color: transparemt; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: mediumpurple;" />
-                  <PasswordField fx:id="passwordField" layoutX="113.0" layoutY="292.0" prefHeight="38.0" prefWidth="273.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: mediumpurple; -fx-border-width: 0px 0px 2px 0px;" />
-                  <Button fx:id="btn_register" layoutX="207.0" layoutY="375.0" mnemonicParsing="false" onAction="#onClick_btn_register" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: #9370db;" text="Sign Up" textFill="WHITE" />
-                  <Text fill="MEDIUMPURPLE" layoutX="191.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Registration">
+                  <TextField fx:id="email_id" layoutX="112.0" layoutY="207.0" prefHeight="42.0" prefWidth="270.0" promptText="User Name" style="-fx-background-color: transparemt; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: mediumpurple;" />
+                  <PasswordField fx:id="passwordField" layoutX="113.0" layoutY="284.0" prefHeight="38.0" prefWidth="273.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: mediumpurple; -fx-border-width: 0px 0px 2px 0px;" />
+                  <Button fx:id="btn_register" layoutX="206.0" layoutY="347.0" mnemonicParsing="false" onAction="#onClick_btn_register" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: #9370db;" text="Sign Up" textFill="WHITE" />
+                  <Text fill="MEDIUMPURPLE" layoutX="190.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Registration">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Text>
                   <Button layoutX="378.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: transparent;" />
-                  <TextField fx:id="username" layoutX="114.0" layoutY="174.0" prefHeight="42.0" prefWidth="270.0" promptText="User Name" style="-fx-background-color: transparemt; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: mediumpurple;" />
-                  <Label fx:id="label" layoutX="120.0" layoutY="438.0" prefHeight="30.0" prefWidth="278.0" />
+                  <Label fx:id="label" layoutX="120.0" layoutY="438.0" prefHeight="30.0" prefWidth="278.0" textAlignment="CENTER" textFill="MEDIUMPURPLE">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
                </children>
             </AnchorPane>
             <Button fx:id="go_to_next" layoutX="708.0" layoutY="498.0" mnemonicParsing="false" onAction="#switchToLogIn" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: #9370db;" text="Next" textFill="WHITE" />
