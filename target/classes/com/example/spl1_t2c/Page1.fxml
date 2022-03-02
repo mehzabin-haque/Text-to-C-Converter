@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.image.Image?>
@@ -10,36 +12,44 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.spl1_t2c.ToDo1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.spl1_t2c.Type_Var">
    <center>
       <AnchorPane prefHeight="534.0" prefWidth="800.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="534.0" fitWidth="800.0" layoutX="14.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="534.0" fitWidth="800.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@resize-16444821721075282239spl5.jpg" />
+                  <Image url="@imag800x550.jpg" />
                </image>
                <effect>
                   <BoxBlur />
                </effect>
             </ImageView>
-            <Button fx:id="start" layoutX="74.0" layoutY="89.0" mnemonicParsing="false" onAction="#Start" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Start" textFill="WHITE">
+            <Button fx:id="start" layoutX="131.0" layoutY="46.0" mnemonicParsing="false" onAction="#Start" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Start" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <TextField fx:id="print" alignment="CENTER" layoutX="74.0" layoutY="134.0" onAction="#print1" prefHeight="30.0" prefWidth="159.0" promptText="Print" style="-fx-background-color: black;">
+            <TextField fx:id="print" alignment="CENTER" layoutX="25.0" layoutY="332.0" onAction="#print1" prefHeight="30.0" prefWidth="318.0" promptText="Print" style="-fx-background-color: white;">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </TextField>
-            <Button fx:id="enter" layoutX="74.0" layoutY="178.0" mnemonicParsing="false" onAction="#Enter" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Enter" textFill="WHITE">
+            <Button fx:id="enter" layoutX="131.0" layoutY="384.0" mnemonicParsing="false" onAction="#Enter" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Enter" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Label fx:id="sout" layoutX="332.0" layoutY="35.0" prefHeight="462.0" prefWidth="447.0" textFill="WHITE">
+            <TextArea fx:id="out" layoutX="366.0" layoutY="15.0" prefHeight="484.0" prefWidth="409.0" style="-fx-background-color: transparent;" />
+            <ComboBox fx:id="comb1" layoutX="25.0" layoutY="127.0" onAction="#comBox" prefWidth="150.0" promptText="var_type" />
+            <ComboBox fx:id="comb2" layoutX="25.0" layoutY="184.0" prefWidth="150.0" promptText="Variable" />
+            <TextField fx:id="var_name" layoutX="193.0" layoutY="127.0" promptText="var_name" />
+            <TextField fx:id="value" layoutX="193.0" layoutY="184.0" promptText="value" />
+            <ComboBox fx:id="comb3" layoutX="25.0" layoutY="242.0" prefWidth="150.0" promptText="If-Else" />
+            <TextField fx:id="condition" layoutX="193.0" layoutY="242.0" promptText="condition" />
+            <TextField fx:id="inCondition" layoutX="55.0" layoutY="287.0" prefHeight="26.0" prefWidth="264.0" promptText="Command inside if else" />
+            <Label fx:id="error" layoutX="67.0" layoutY="443.0" prefHeight="34.0" prefWidth="198.0" textAlignment="CENTER" textFill="#ff8f8f">
                <font>
-                  <Font size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
          </children></AnchorPane>

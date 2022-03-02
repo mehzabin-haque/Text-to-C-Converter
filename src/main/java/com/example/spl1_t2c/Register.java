@@ -29,12 +29,13 @@ public class Register extends SwitchScene{
     public Scene scene;
     public Parent root;
     @FXML
-    public void onClick_btn_register(ActionEvent e){
+    public void onClick_btn_register(ActionEvent e) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append(username.getText().toString()+"\n");
         sb.append(passwordField.getText().toString());
         label.setText("Registration successful.");
         File file = new File("login.txt");
+        //file.createNewFile();
         try {
             FileWriter w = new FileWriter(file);
             w.write(sb.toString());
@@ -46,7 +47,7 @@ public class Register extends SwitchScene{
         try{
             FileWriter w= new FileWriter(f);
             w.write(email_id.getText()+"\n");
-           // w.append(contact_no.getText()+"\n");
+            // w.append(contact_no.getText()+"\n");
             w.close();
         }
         catch(IOException ioException) {

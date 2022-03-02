@@ -36,25 +36,4 @@ public class ToDo1{
                 "\nint main(){ \n ");
     }
 
-    public void Enter() throws IOException {
-        print1();
-        File f = new File("print.txt");
-        try(Scanner sc = new Scanner(f);){
-
-            while (sc.hasNextLine()) {
-                String data = sc.nextLine();
-                sout.setText("#include<conio.h> " +
-                        "\nusing namespace std;" +
-                        "\nint main(){ \n " +
-                        "cout << " + data + "\nreturn 0;" + "\n } \n " );
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        //String s = readFile("print.txt");
-
-      // System.out.println(readFile("print.txt"));
-
-    }
-
 }
