@@ -6,9 +6,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class Type_Var extends ToDo1 implements Initializable {
 
@@ -41,7 +45,6 @@ public class Type_Var extends ToDo1 implements Initializable {
 //        return true;
 //    }
 
-
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList<String> list = FXCollections.observableArrayList("int", "long", "float", "double", "void");
         comb1.setItems(list);
@@ -51,27 +54,42 @@ public class Type_Var extends ToDo1 implements Initializable {
         comb2.setItems(list3);
     }
 
+    public String removeDuplicates(String input){
+        String result = "";
+        for (int i = 0; i < input.length(); i++) {
+            if(!result.contains(String.valueOf(input.charAt(i)))) {
+                result += String.valueOf(input.charAt(i));
+            }
+        }
+        return result;
+    }
+
     public void Enter() throws IOException {
         //System.out.println(comb2.getItems());
         String comment = print.getText(); // print part
         //System.out.println(comment);
         String varName = var_name.getText(); // variable name
+        String s = comb1.getSelectionModel().getSelectedItem();
+        //System.out.println(s); // 1st combo er value
+
+        ObservableList<String> list = FXCollections.observableArrayList(comb2.getItems());
+        list.add(var_name.getText());
+        boolean b = varName.isEmpty();
+        if(var_name != null && !b){
+           // removeDuplicates(varName);
+            comb2.setItems(list);
+        }
+
         String vaLue = value.getText();
+        String varNum = comb2.getSelectionModel().getSelectedItem(); // 2nd combo er value
+        String if1 = comb3.getSelectionModel().getSelectedItem();
         //System.out.println(vaLue);
         String cond = condition.getText(); // condition of ifelse
         String inCond = inCondition.getText();  // condition er vitor ja thakbe
-        ObservableList<String> list = FXCollections.observableArrayList(comb2.getItems());
-        list.add(var_name.getText());
-        if(var_name != null ){
-            comb2.setItems(list);
-        }
         //var_name.clear();
 //        comb3.getItems().add(condition.getText());
 //        var_name.clear();
-        String s = comb1.getSelectionModel().getSelectedItem();
-        //System.out.println(s); // 1st combo er value
-        String varNum = comb2.getSelectionModel().getSelectedItem(); // 2nd combo er value
-        String if1 = comb3.getSelectionModel().getSelectedItem();
+
         //System.out.println(comb2.getValue()); // combox varibale print
 
         out.setText("#include<iostream> " +
@@ -79,11 +97,11 @@ public class Type_Var extends ToDo1 implements Initializable {
                 "\nint main(){");
 
         if (varName != null && s == null) {
-            error.setText(" Varibale type is not declared ");
+            error.setText(" Variable type is not declared ");
         }
 
         else if (s != null && varName == null) {
-            error.setText(" Varibale name is not declared ");
+            error.setText(" Variable name is not declared ");
         }
 
         else if (varName == null && s == null) {
@@ -91,38 +109,42 @@ public class Type_Var extends ToDo1 implements Initializable {
             out.appendText("");
         }
 
-        else if (varName != null && s != null) {
+        else if (varName != null && s != null ) {
             out.appendText("\n " + s + " " + varName + " ;");
-           // comb2.getItems().add(var_name.getText());
-            if(varNum == null){
-                out.appendText("");
-            }
+            //comb2.getItems().add(var_name.getText());
+//            if(varNum == null){
+//                out.appendText("");
+//            }
             if (value != null) {
                 if (s == "int") {
                     try {
-                         Integer.parseInt(vaLue);
+                         int check = Integer.parseInt(vaLue);
                     } catch (NumberFormatException nfe) {
                         error.setText("It's not a Integer Value");
                     }
-                } else if (s == "float") {
+                }
+                else if (s == "float") {
                     try {
-                        Float.parseFloat(vaLue);
+                       float check = Float.parseFloat(vaLue);
                     } catch (NumberFormatException nfe) {
                         error.setText("It's not a Float Value");
                     }
-                } else if (s == "double") {
+                }
+                else if (s == "double") {
                     try {
-                         Double.parseDouble(vaLue);
+                          double d = Double.parseDouble(vaLue);
                     } catch (NumberFormatException nfe) {
                         error.setText("It's not a Double Value");
                     }
-                } else if (s == "long") {
+                }
+                else if (s == "long") {
                     try {
-                         Long.parseLong(vaLue);
+                        long l = Long.parseLong(vaLue);
                     } catch (NumberFormatException nfe) {
                         error.setText("It's not a Long Value");
                     }
-                } else {
+                }
+                else {
                     System.out.println("void ");
                 }
 
@@ -132,11 +154,24 @@ public class Type_Var extends ToDo1 implements Initializable {
 
         if (if1 != null) {
             if (if1 != "else") {
-                if (cond == null) {
+
+                if (cond.isEmpty()) {
                     error.setText(" Condition of if and else-if statement is needed ");
+
                 }
-                else if (cond != null) {
-                    out.appendText(" \n " + if1 + " ( " + cond + " ) {");
+                else if (cond != null ) {
+                    if(if1 == "if"){
+                        out.appendText(" \n " + if1 + " ( " + cond + " ) {");
+                    }
+                    if(if1 == "else if"){
+                        out.appendText(" \n " + if1 + " ( " + cond + " ) {");
+                    }
+
+//                    comb3.setOnAction(e -> out.appendText(" \n " + if1 + " ( " + cond + " ) {"));
+//                    comb3.setOnAction(e -> out.appendText(" \n " + if1 + " ( " + cond + " ) {"));
+
+                   //out.appendText(" \n " + if1 + " ( " + cond + " ) {" + "\n" );
+
                 }
             }
             else if (if1 == "else") {
@@ -153,17 +188,17 @@ public class Type_Var extends ToDo1 implements Initializable {
 //                            out.appendText(inCond.substring(6) + " ;" + "\n\t}");
 //                        }
                     }
-
                     else{
                         out.appendText("\n \t " + inCond + ";" + "\n\t} ");
                     }
                 }
             }
 
-//        if(comment == null) {
-//            out.appendText("");
-//        }
-        if(comment != null) {
+        boolean c = comment.isEmpty();
+        if(comment == null && c) {
+            out.appendText("");
+        }
+        if(comment != null && !c) {
             out.appendText("\n cout << \" " + comment + " \" ;");
         }
 
