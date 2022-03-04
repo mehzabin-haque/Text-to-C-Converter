@@ -29,7 +29,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <TextField fx:id="print" alignment="CENTER" layoutX="25.0" layoutY="332.0" onAction="#print1" prefHeight="30.0" prefWidth="318.0" promptText="Print" style="-fx-background-color: white;">
+            <TextField fx:id="print" alignment="CENTER" layoutX="25.0" layoutY="332.0" prefHeight="30.0" prefWidth="318.0" promptText="Print" style="-fx-background-color: white;">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
