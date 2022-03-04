@@ -31,7 +31,7 @@ public class Register extends SwitchScene{
     @FXML
     public void onClick_btn_register(ActionEvent e) throws IOException {
         StringBuilder sb = new StringBuilder();
-        sb.append(username.getText().toString()+"\n");
+        sb.append(username.getText().toString()).append("\n");
         sb.append(passwordField.getText().toString());
         label.setText("Registration successful.");
         File file = new File("login.txt");

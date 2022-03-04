@@ -19,7 +19,9 @@ public class LogIn extends SwitchScene{
 
     @FXML
     private Stage stage;
+    @FXML
     private Scene scene;
+    @FXML
     private Parent root;
 
     public void switchToRegistration(ActionEvent event) throws IOException {
@@ -29,6 +31,15 @@ public class LogIn extends SwitchScene{
         stage.setScene(scene);
         stage.show();
     }
+
+    public void switchToPage1(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Page1.fxml")));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     @FXML
     public Label username1,password,Sign_in,login_success;
     @FXML
@@ -64,7 +75,6 @@ public class LogIn extends SwitchScene{
                 login_success.setText("Login Successful.");
                 switchToPage1(e);
 
-
             } else {
                 login_success.setText("Invalid information. Try again.");
             }
@@ -76,13 +86,6 @@ public class LogIn extends SwitchScene{
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-    }
-    public void switchToPage1(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Page1.fxml")));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
 }

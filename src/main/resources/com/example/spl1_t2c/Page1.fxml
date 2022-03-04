@@ -29,7 +29,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <TextField fx:id="print" alignment="CENTER" layoutX="25.0" layoutY="332.0" onAction="#print1" prefHeight="30.0" prefWidth="318.0" promptText="Print" style="-fx-background-color: white;">
+            <TextField fx:id="print" alignment="CENTER" layoutX="25.0" layoutY="332.0" prefHeight="30.0" prefWidth="318.0" promptText="Print" style="-fx-background-color: white;">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -40,7 +40,7 @@
                </font>
             </Button>
             <TextArea fx:id="out" layoutX="366.0" layoutY="15.0" prefHeight="484.0" prefWidth="409.0" style="-fx-background-color: transparent;" />
-            <ComboBox fx:id="comb1" layoutX="25.0" layoutY="127.0" onAction="#comBox" prefWidth="150.0" promptText="var_type" />
+            <ComboBox fx:id="comb1" layoutX="25.0" layoutY="127.0" prefWidth="150.0" promptText="var_type" />
             <ComboBox fx:id="comb2" layoutX="25.0" layoutY="184.0" prefWidth="150.0" promptText="Variable" />
             <TextField fx:id="var_name" layoutX="193.0" layoutY="127.0" promptText="var_name" />
             <TextField fx:id="value" layoutX="193.0" layoutY="184.0" promptText="value" />
