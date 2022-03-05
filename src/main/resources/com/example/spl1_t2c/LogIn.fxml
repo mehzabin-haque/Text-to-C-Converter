@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.spl1_t2c.LogIn">
@@ -36,8 +37,10 @@
                   <Button fx:id="log_in" layoutX="166.0" layoutY="377.0" mnemonicParsing="false" onAction="#onClick_btn_login" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: #9370db;" text="Log In" textFill="WHITE" />
                   <Text fill="MEDIUMPURPLE" layoutX="156.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="User Log In" />
                   <Button layoutX="378.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: transparent;" />
-                  <Label fx:id="login_success" layoutX="63.0" layoutY="432.0" prefHeight="38.0" prefWidth="284.0" style="-fx-background-color: transparent;" />
-                  <Button fx:id="go_to_next" layoutX="317.0" layoutY="523.0" mnemonicParsing="false" onAction="#switchToPage1" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: #9370db;" text="Next" textFill="WHITE" />
+                  <Label fx:id="login_success" layoutX="63.0" layoutY="432.0" prefHeight="38.0" prefWidth="284.0" style="-fx-background-color: transparent;" textFill="#df1212">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
                </children>
             </AnchorPane>
          </children>
