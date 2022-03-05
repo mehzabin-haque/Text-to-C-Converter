@@ -46,7 +46,7 @@ public class Type_Var extends ToDo1 implements Initializable {
 //    }
 
     public void initialize(URL url, ResourceBundle rb) {
-        ObservableList<String> list = FXCollections.observableArrayList("int", "long", "float", "double", "void");
+        ObservableList<String> list = FXCollections.observableArrayList("int", "char", "float", "double", "void");
         comb1.setItems(list);
         ObservableList<String> list2 = FXCollections.observableArrayList("if", "else if", "else");
         comb3.setItems(list2);
@@ -81,6 +81,7 @@ public class Type_Var extends ToDo1 implements Initializable {
         }
 
         String vaLue = value.getText();
+        boolean val = vaLue.isEmpty();
         String varNum = comb2.getSelectionModel().getSelectedItem(); // 2nd combo er value
         String if1 = comb3.getSelectionModel().getSelectedItem();
         //System.out.println(vaLue);
@@ -97,7 +98,8 @@ public class Type_Var extends ToDo1 implements Initializable {
                 "\nint main(){");
 
         if (varName != null && s == null) {
-            error.setText(" Variable type is not declared ");
+            //comb1.setOnAction(e -> error.setText(" Variable type is not declared "));
+           // error.setText(" Variable type is not declared ");
         }
 
         else if (s != null && varName == null) {
@@ -115,40 +117,52 @@ public class Type_Var extends ToDo1 implements Initializable {
 //            if(varNum == null){
 //                out.appendText("");
 //            }
-            if (value != null) {
+            if (value != null && !val) {
                 if (s == "int") {
                     try {
                          int check = Integer.parseInt(vaLue);
                     } catch (NumberFormatException nfe) {
-                        error.setText("It's not a Integer Value");
+                        error.setText("It's not an Integer Value.\nUse values like '5' not " + vaLue );
                     }
                 }
                 else if (s == "float") {
                     try {
                        float check = Float.parseFloat(vaLue);
                     } catch (NumberFormatException nfe) {
-                        error.setText("It's not a Float Value");
+                        error.setText("It's not a Float Value.\nUse values like '5.0' not " + vaLue);
                     }
                 }
                 else if (s == "double") {
                     try {
                           double d = Double.parseDouble(vaLue);
                     } catch (NumberFormatException nfe) {
-                        error.setText("It's not a Double Value");
+                        error.setText("It's not a Double Value.\nUse values like '5.000' not " + vaLue);
                     }
                 }
-                else if (s == "long") {
-                    try {
-                        long l = Long.parseLong(vaLue);
-                    } catch (NumberFormatException nfe) {
-                        error.setText("It's not a Long Value");
+                else if (s == "char") {
+
+                    for(int i=0; i < s.length(); i++) {
+                        Boolean flag = Character.isDigit(s.charAt(i));
+                        if(flag) {
+                            //System.out.println("'"+ s.charAt(i)+"' is a number");
+                            error.setText("It's not a character \n It's a number");
+                        }
+//                        else {
+//                                System.out.println("'"+ s.charAt(i)+"' is a letter");
+//                        }
                     }
+
                 }
                 else {
                     System.out.println("void ");
                 }
 
-                out.appendText("\n" + varNum + " = " + vaLue + " ;");
+                if(s == "char"){
+                    out.appendText("\n" + varNum + " = '" + vaLue + "' ;");
+                }
+                else{
+                    out.appendText("\n" + varNum + " = " + vaLue + " ;");
+                }
             }
         }
 
@@ -156,7 +170,7 @@ public class Type_Var extends ToDo1 implements Initializable {
             if (if1 != "else") {
 
                 if (cond.isEmpty()) {
-                    error.setText(" Condition of if and else-if statement is needed ");
+                    error.setText(" Condition of if and else-if \n statement is needed ");
 
                 }
                 else if (cond != null ) {
@@ -175,7 +189,7 @@ public class Type_Var extends ToDo1 implements Initializable {
                 }
             }
             else if (if1 == "else") {
-                out.appendText(" else { ");
+                out.appendText(" \nelse { ");
             }
 
 //            if (inCond == null) {
