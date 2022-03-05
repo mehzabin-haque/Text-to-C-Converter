@@ -47,7 +47,7 @@
             <ComboBox fx:id="comb3" layoutX="25.0" layoutY="242.0" prefWidth="150.0" promptText="If-Else" />
             <TextField fx:id="condition" layoutX="193.0" layoutY="242.0" promptText="condition" />
             <TextField fx:id="inCondition" layoutX="55.0" layoutY="287.0" prefHeight="26.0" prefWidth="264.0" promptText="Command inside if else" />
-            <Label fx:id="error" layoutX="67.0" layoutY="443.0" prefHeight="34.0" prefWidth="198.0" textAlignment="CENTER" textFill="#ff8f8f">
+            <Label fx:id="error" layoutX="82.0" layoutY="443.0" prefHeight="63.0" prefWidth="235.0" textAlignment="CENTER" textFill="#ff8f8f">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
