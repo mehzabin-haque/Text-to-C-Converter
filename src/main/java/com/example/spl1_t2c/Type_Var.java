@@ -197,7 +197,7 @@ public class Type_Var extends ToDo1 implements Initializable {
 //            }
             if (inCond != null) {
                     if (substring1(inCond)) {
-                        out.appendText("\n \t cout << \" " + varName + "\" ;" + "\n\t}");
+                        out.appendText("\n \t cout <<  " + varName + " ;" + "\n\t}");
 //                        if (substring2(varName)) {
 //                            out.appendText(inCond.substring(6) + " ;" + "\n\t}");
 //                        }

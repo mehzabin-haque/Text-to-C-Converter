@@ -76,7 +76,7 @@ public class LogIn extends SwitchScene{
                 switchToPage1(e);
 
             } else {
-                login_success.setText("Invalid information. Try again.");
+                login_success.setText("Invalid credentials. Try again.");
             }
             read.close();
 
