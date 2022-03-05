@@ -6,6 +6,7 @@ import java.util.Scanner;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class ToDo1{
@@ -13,6 +14,7 @@ public class ToDo1{
     public TextField print;
     public Button start,enter;
     public Label sout;
+    public TextArea out;
 
     //String print1;
     @FXML
@@ -31,7 +33,7 @@ public class ToDo1{
     }
 
     public void Start(){
-        sout.setText("#include<conio.h> " +
+        out.setText("#include<conio.h> " +
                 "\nusing namespace std;" +
                 "\nint main(){ \n ");
     }
