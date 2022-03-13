@@ -6,6 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class If_Else_Loop extends Type_Var {
-    File file1 = new File("If-else.txt");
+public class Value_Assign extends Type_Var {
+
 }
