@@ -30,12 +30,12 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <TextField fx:id="print" alignment="CENTER" layoutX="27.0" layoutY="367.0" prefHeight="30.0" prefWidth="318.0" promptText="Print" style="-fx-background-color: white;">
+            <TextField fx:id="print" alignment="CENTER" layoutX="27.0" layoutY="367.0" prefHeight="114.0" prefWidth="318.0" promptText="Algo" style="-fx-background-color: white;">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </TextField>
-            <Button fx:id="enter" layoutX="131.0" layoutY="414.0" mnemonicParsing="false" onAction="#Enter" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Enter" textFill="WHITE">
+            <Button fx:id="enter" layoutX="131.0" layoutY="484.0" mnemonicParsing="false" onAction="#Enter" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Enter" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -54,10 +54,10 @@
                </font>
             </Label>
             <Line endX="208.4000244140625" layoutX="568.0" layoutY="399.0" startX="-202.00003051757812" />
-            <ComboBox fx:id="comb5" layoutX="25.0" layoutY="322.0" prefWidth="150.0" promptText="Loop" />
             <TextField fx:id="loop_command" layoutX="194.0" layoutY="322.0" promptText="Command inside Loop" />
             <ComboBox fx:id="comb4" layoutX="25.0" layoutY="194.0" prefWidth="150.0" promptText="All Variable" />
             <TextField fx:id="operation" layoutX="194.0" layoutY="194.0" promptText="operations" />
+            <Button fx:id="loop" layoutX="27.0" layoutY="321.0" mnemonicParsing="false" onAction="#AllLoop" prefHeight="26.0" prefWidth="152.0" text="Loop" />
          </children></AnchorPane>
    </center>
 </BorderPane>
