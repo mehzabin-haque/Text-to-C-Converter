@@ -17,14 +17,9 @@
                   <Image url="@Welcome.jpg" />
                </image>
             </ImageView>
-            <Button fx:id="signIn" layoutX="715.0" layoutY="378.0" mnemonicParsing="false" onAction="#switchToRegistration" prefHeight="27.0" prefWidth="70.0" style="-fx-background-color: mediumpurple;" text="Sign Up" textFill="WHITE">
+            <Button layoutX="691.0" layoutY="531.0" mnemonicParsing="false" onAction="#switchToLogIn" prefHeight="28.0" prefWidth="110.0" style="-fx-background-color: mediumpurple;" text="Welcome" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Button layoutX="715.0" layoutY="431.0" mnemonicParsing="false" onAction="#switchToLogIn" prefHeight="27.0" prefWidth="70.0" style="-fx-background-color: mediumpurple;" text="Sign In" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Button>
             <Text fill="MEDIUMPURPLE" layoutX="252.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text to C++ Converter" textAlignment="CENTER" wrappingWidth="296.50433349609375">

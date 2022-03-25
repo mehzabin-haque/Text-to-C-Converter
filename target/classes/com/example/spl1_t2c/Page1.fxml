@@ -30,12 +30,12 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <TextField fx:id="print" alignment="CENTER" layoutX="27.0" layoutY="367.0" prefHeight="30.0" prefWidth="318.0" promptText="Print" style="-fx-background-color: white;">
+            <TextField fx:id="print" alignment="CENTER" layoutX="27.0" layoutY="367.0" prefHeight="114.0" prefWidth="318.0" promptText="Algo" style="-fx-background-color: white;">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </TextField>
-            <Button fx:id="enter" layoutX="131.0" layoutY="414.0" mnemonicParsing="false" onAction="#Enter" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Enter" textFill="WHITE">
+            <Button fx:id="enter" layoutX="131.0" layoutY="484.0" mnemonicParsing="false" onAction="#Enter" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Enter" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

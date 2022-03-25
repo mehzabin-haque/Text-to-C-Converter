@@ -26,11 +26,11 @@ public class Type_Var extends ToDo1 implements Initializable {
     public Label sout;
     public Label error;
     public TextArea out;
+    public Button loop;
     public ComboBox <String> comb1 ;
     public ComboBox <String> comb2 ;
     public ComboBox <String> comb3;
     public ComboBox <String> comb4 ;
-    public ComboBox <String> comb5 ;
 
     boolean substring1(String line) {
         String s="print";
@@ -44,8 +44,6 @@ public class Type_Var extends ToDo1 implements Initializable {
         comb1.setItems(list);
         ObservableList<String> list2 = FXCollections.observableArrayList("if", "else if", "else");
         comb3.setItems(list2);
-        ObservableList<String> list5 = FXCollections.observableArrayList("for", "while", "do-while");
-        comb5.setItems(list5);
         ObservableList<String> list3 = FXCollections.emptyObservableList();
         comb2.setItems(list3);
     }
@@ -60,15 +58,14 @@ public class Type_Var extends ToDo1 implements Initializable {
         return result;
     }
 
-    File file1 = new File("If-else.txt");
-
     public void Enter() throws Exception {
-        //System.out.println(comb2.getItems());
+        File f1 = new File("main.txt");
+        f1.createNewFile();
+
         String comment = print.getText(); // print part
-        //System.out.println(comment);
+
         String varName = var_name.getText(); // variable name
         String s = comb1.getSelectionModel().getSelectedItem();
-        //System.out.println(s); // 1st combo er value
 
         ObservableList<String> list = FXCollections.observableArrayList(comb2.getItems());
         list.add(var_name.getText());
@@ -85,18 +82,29 @@ public class Type_Var extends ToDo1 implements Initializable {
             comb4.setItems(list);
         }
 
-
         String vaLue = value.getText();
         boolean val = vaLue.isEmpty();
         String varNum = comb2.getSelectionModel().getSelectedItem(); // 2nd combo er value
         String if1 = comb3.getSelectionModel().getSelectedItem();
-        String loop = comb5.getSelectionModel().getSelectedItem();
-        //System.out.println(vaLue);
+        String all = comb4.getSelectionModel().getSelectedItem();
         String cond = condition.getText(); // condition of ifelse
         String inCond = inCondition.getText();  // condition er vitor ja thakbe
+        String opera = operation.getText();
+        String comm = loop_command.getText();
         out.setText("#include<iostream> " +
                 "\nusing namespace std;" +
                 "\nint main(){");
+
+        FileWriter myWriter = new FileWriter("main.txt");
+
+
+        myWriter.write(s + " " + varName);
+        myWriter.append("\n" + varNum + " " + vaLue);
+        myWriter.append("\n" + all + " " + opera );
+        myWriter.append("\n" + if1 + " " + cond + "\n\t"+inCond);
+        myWriter.append("\n" + loop + " " + comm);
+
+        myWriter.close();
 
         if (varName != null && s == null) {
             //comb1.setOnAction(e -> error.setText(" Variable type is not declared "));
@@ -165,22 +173,21 @@ public class Type_Var extends ToDo1 implements Initializable {
         }
 
         If_else(if1,cond,inCond, varName);
+        AllLoop(comm);
+        AllCommand(comment);
 
         boolean c = comment.isEmpty();
         if(comment == null && c) {
             out.appendText("");
         }
-        if(comment != null && !c) {
-            out.appendText("\n cout << \" " + comment + " \" ;");
-        }
+//        if(comment != null && !c) {
+//            out.appendText("\n cout << \" " + comment + " \" ;");
+//        }
 
         if(comment == null && varName == null && s == null && if1 == null){
             out.appendText("");
         }
 
-        if(loop != null && !loop.isEmpty()){
-            Loop(loop);
-        }
         out.appendText("\n return 0; \n}");
     }
 
@@ -222,14 +229,13 @@ public class Type_Var extends ToDo1 implements Initializable {
         }
     }
 
-    public void Loop(String loop) throws IOException {
+    public void AllLoop(String inComm) throws IOException {
         File file1 = new File("Loop.txt");
         file1.createNewFile();
         StringBuffer sb = null;
         try (FileWriter fw = new FileWriter("Loop.txt", true);
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
-            out.append(comb5.getValue()).append("\n");
 
             FileReader fr = new FileReader(file1);   //reads the file
             BufferedReader br = new BufferedReader(fr);  //creates a buffering character input stream
@@ -244,39 +250,20 @@ public class Type_Var extends ToDo1 implements Initializable {
         } catch (IOException e) {
             System.out.println(e);
         }
+    }
 
-//            try {
-//                for (int i = 0; i < sb.length(); i++) {
-//                    //System.out.println(sb.charAt(i));
-//                    if (sb.subSequence(i, (i + 2)) == "for") {
-//                        out.appendText(" \n for( int i=0; i<n; i++){\n");
-//                    }
-//
-//                    if (sb.subSequence(i, (i + 4)) == "while") {
-//                        out.appendText(" \n while(i<n){\n\t  i++; \n\t}");
-//                    }
-//
-//                    if (sb.subSequence(i, (i + 7)) == "do-while") {
-//                        out.appendText("\n do{ \n\n  }while(i<n);");
-//                    }
-//
-//                }
-//            }catch (StringIndexOutOfBoundsException e){
-//                System.out.println(e);
-//            }
-
-        if(loop != null && !loop.isEmpty()){
-            if(loop == "for"){
-                out.appendText(" \n for( int i=0; i<n; i++){\n\n}");
-            }
-
-            else if(loop == "while"){
-                out.appendText(" \n while(i<n){\n\t  i++; \n\t}");
-            }
-            else{
-                out.appendText("\n do{ \n\ni++;  }while(i<n);");
-            }
+    public void AllCommand(String cmd)throws IOException{
+        try {
+            FileReader fr = new FileReader("main.txt");
+            int i;
+            // Holds true till there is nothing to read
+            while ((i = fr.read()) != -1)
+                System.out.print((char)i);
         }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
