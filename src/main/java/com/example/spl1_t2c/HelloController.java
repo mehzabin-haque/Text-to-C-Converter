@@ -30,16 +30,9 @@ public class HelloController extends SwitchScene{
     public Parent root;
 
 
-    public void switchToRegister(ActionEvent event) throws IOException {
-        Object root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Register.fxml")));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene((Parent) root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
     public void switchToLogIn(ActionEvent event) throws IOException {
-        Object root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("LogIn.fxml")));
+        Object root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Page1.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene((Parent) root);
         stage.setScene(scene);
