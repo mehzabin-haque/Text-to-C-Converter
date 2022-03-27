@@ -2,6 +2,7 @@ package com.example.spl1_t2c;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -97,7 +98,6 @@ public class Type_Var extends ToDo1 implements Initializable {
 
         FileWriter myWriter = new FileWriter("main.txt");
 
-
         myWriter.write(s + " " + varName);
         myWriter.append("\n" + varNum + " " + vaLue);
         myWriter.append("\n" + all + " " + opera );
@@ -173,7 +173,6 @@ public class Type_Var extends ToDo1 implements Initializable {
         }
 
         If_else(if1,cond,inCond, varName);
-        AllLoop(comm);
         AllCommand(comment);
 
         boolean c = comment.isEmpty();
@@ -186,6 +185,19 @@ public class Type_Var extends ToDo1 implements Initializable {
 
         if(comment == null && varName == null && s == null && if1 == null){
             out.appendText("");
+        }
+
+        try {
+            File myObj = new File("main.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                System.out.println(data);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
 
         out.appendText("\n return 0; \n}");
@@ -229,36 +241,34 @@ public class Type_Var extends ToDo1 implements Initializable {
         }
     }
 
-    public void AllLoop(String inComm) throws IOException {
+    public void AllLoop(ActionEvent event) throws IOException {
+        String inComm = loop_command.getText();
         File file1 = new File("Loop.txt");
         file1.createNewFile();
-        StringBuffer sb = null;
-        try (FileWriter fw = new FileWriter("Loop.txt", true);
-             BufferedWriter bw = new BufferedWriter(fw);
-             PrintWriter out = new PrintWriter(bw)) {
+        FileWriter myWriter = new FileWriter("loop.txt");
 
-            FileReader fr = new FileReader(file1);   //reads the file
-            BufferedReader br = new BufferedReader(fr);  //creates a buffering character input stream
-            sb = new StringBuffer();
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-                sb.append("\n");
-            }
-            fr.close();
-            //  System.out.println(sb.toString()); file output
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+        myWriter.write("for");
+        myWriter.append("\n"+inComm);
     }
 
     public void AllCommand(String cmd)throws IOException{
+
         try {
-            FileReader fr = new FileReader("main.txt");
-            int i;
-            // Holds true till there is nothing to read
-            while ((i = fr.read()) != -1)
-                System.out.print((char)i);
+                FileReader fr = new FileReader("Loop.txt");
+                FileWriter fw = new FileWriter("main.txt");
+                String str = "";
+
+                int i;
+                while ((i = fr.read()) != -1) {
+                    
+                    str += (char)i;
+                }
+
+                System.out.println(str);
+
+                fw.append("\n"+str);
+                fr.close();
+                fw.close();
         }
         catch (IOException e) {
             e.printStackTrace();
