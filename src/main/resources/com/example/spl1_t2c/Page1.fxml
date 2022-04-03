@@ -30,12 +30,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <TextField fx:id="print" alignment="CENTER" layoutX="27.0" layoutY="367.0" prefHeight="114.0" prefWidth="318.0" promptText="Algo" style="-fx-background-color: white;">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </TextField>
-            <Button fx:id="enter" layoutX="131.0" layoutY="484.0" mnemonicParsing="false" onAction="#Enter" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Enter" textFill="WHITE">
+            <Button fx:id="enter" layoutX="131.0" layoutY="492.0" mnemonicParsing="false" onAction="#Enter" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Enter" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -43,8 +38,8 @@
             <TextArea fx:id="out" layoutX="366.0" layoutY="15.0" prefHeight="484.0" prefWidth="410.0" style="-fx-background-color: transparent;" />
             <ComboBox fx:id="comb1" layoutX="25.0" layoutY="101.0" prefWidth="150.0" promptText="var_type" />
             <ComboBox fx:id="comb2" layoutX="25.0" layoutY="143.0" prefWidth="150.0" promptText="Variable" />
-            <TextField fx:id="var_name" layoutX="193.0" layoutY="101.0" promptText="var_name" />
-            <TextField fx:id="value" layoutX="194.0" layoutY="143.0" promptText="value" />
+            <TextField fx:id="var_name" layoutX="194.0" layoutY="101.0" promptText="var_name" />
+            <TextField fx:id="value" layoutX="193.0" layoutY="143.0" promptText="value" />
             <ComboBox fx:id="comb3" layoutX="25.0" layoutY="242.0" prefWidth="150.0" promptText="Cond-Operation" />
             <TextField fx:id="condition" layoutX="194.0" layoutY="242.0" promptText="condition" />
             <TextField fx:id="inCondition" layoutX="54.0" layoutY="280.0" prefHeight="26.0" prefWidth="264.0" promptText="Command inside if else" />
@@ -54,10 +49,11 @@
                </font>
             </Label>
             <Line endX="208.4000244140625" layoutX="568.0" layoutY="399.0" startX="-202.00003051757812" />
-            <TextField fx:id="loop_command" layoutX="194.0" layoutY="322.0" promptText="Command inside Loop" />
+            <TextField fx:id="loop_command" layoutX="194.0" layoutY="321.0" promptText="Command inside Loop" />
             <ComboBox fx:id="comb4" layoutX="25.0" layoutY="194.0" prefWidth="150.0" promptText="All Variable" />
             <TextField fx:id="operation" layoutX="194.0" layoutY="194.0" promptText="operations" />
             <Button fx:id="loop" layoutX="27.0" layoutY="321.0" mnemonicParsing="false" onAction="#AllLoop" prefHeight="26.0" prefWidth="152.0" text="Loop" />
+            <TextField fx:id="print" layoutX="29.0" layoutY="393.0" prefHeight="54.0" prefWidth="298.0" />
          </children></AnchorPane>
    </center>
 </BorderPane>
