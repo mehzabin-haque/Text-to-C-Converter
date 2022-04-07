@@ -9,6 +9,9 @@ import javafx.scene.control.*;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -16,6 +19,7 @@ public class Type_Var extends ToDo1 implements Initializable {
 
     @FXML
     public TextField print = new TextField("");
+    public TextArea print1 = new TextArea("");
     public TextField var_name = new TextField("");
     public TextField value = new TextField("");
     public TextField condition = new TextField("");
@@ -48,6 +52,27 @@ public class Type_Var extends ToDo1 implements Initializable {
 
     void printFunction(String line)
     {
+       // while(sc.hasNextLine()) {
+
+//                                       for (int j = 0; j <= sc.nextLine().length(); j++) {
+//                                           if(count ==1){
+//                                               if (sc.nextLine().charAt(i) == '(') {
+//                                                   System.out.println("  ++++++++++++++++++ ");
+//                                                   out.appendText("\nvoid " + br.readLine());
+//                                                   out.appendText(sc.nextLine().replace(',',';'));
+//                                                   break;
+//
+//                                               }
+//                                           }
+//                                       }
+// break;
+// }
+//sc.close();
+//                               for(int i=0;i<algo.length();i++){
+//                                   if(algo.charAt(i) == '('){
+//                                       out.appendText(algo);
+//                                   }
+//                               }
         int algoIndent;
         //int i=7+algoIndent.top();
         //code<<indent.top()<<"cout <<";\\
@@ -231,10 +256,15 @@ public class Type_Var extends ToDo1 implements Initializable {
         int c=0;
         for(int i=0; i<line.length(); i++)
         {
-            if(line.charAt(i)==' ')
+            if(line.charAt(i)==' '){
                 c++;
-            else
+            }
+            else if(line.charAt(i)=='\t'){
+                c += 4 ;
+            }
+            else{
                 return c;
+            }
         }
 
         return c;
@@ -315,9 +345,14 @@ public class Type_Var extends ToDo1 implements Initializable {
         String inCond = inCondition.getText();  // condition er vitor ja thakbe
         String opera = operation.getText();
         String comm = loop_command.getText();
-        out.setText("#include<iostream> " +
-                "\nusing namespace std;" +
-                "\nint main(){");
+        String algo = print1.getText();
+
+            out.setText("#include<iostream> " +
+                    "\nusing namespace std;");
+
+            Algo_Conversion(algo);
+
+            out.appendText("\nint main(){\n");
 
             try {
                 BufferedWriter out = new BufferedWriter(new FileWriter("main.txt"));
@@ -429,6 +464,15 @@ public class Type_Var extends ToDo1 implements Initializable {
         out.appendText("\n return 0; \n}");
     }
 
+    public void Algo_Conversion2(String inp) {
+        for(int i=0;i<inp.length();i++){
+            out.appendText("\nvoid " + Arrays.toString(inp.split(",")));
+            if(inp.charAt(i) == ','){
+                out.appendText(inp.replace(',',';'));
+            }
+        }
+    }
+
     public void If_else(String if1,String cond,String inCond,String varName) throws Exception{
         if (if1 != null) {
 
@@ -478,47 +522,36 @@ public class Type_Var extends ToDo1 implements Initializable {
     }
 
     public void AllCommand(String cmd)throws IOException{
-
-//        try{
-           // File file = new File("comment.txt");
-//            if (!file.exists()) {
-//                file.createNewFile();
-//            }
-//            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-//            BufferedWriter bw = new BufferedWriter(fw);
-//            bw.write(cmd);
-//            bw.close();
-//        }
-//        catch(Exception e){
-//            System.out.println(e);
-//        }
-//        readFile("comment.txt");
-        //fileWriter(new File("comment.txt"),print);
-        countSpace(cmd);
+        int c = countSpace(cmd);
+        System.out.println(c);
         try {
             for (int i = 0; i < cmd.length(); i++) {
                 if(i+2 < cmd.length()){
+
+                    if(cmd.charAt(i)=='p'&& cmd.charAt(i+1)=='r' && cmd.charAt(i+2)=='i'){
+                        out.appendText("cout << " + cmd.charAt(i+6));
+                    }
                     String s1 = "downto";
                     if (cmd.charAt(i)=='f' && cmd.charAt(i+1)=='o' && cmd.charAt(i+2)=='r') {
 
                         out.appendText("\n\nfor (int " + cmd.charAt(i + 4));
                         String s = "=";
-                        if (s.equals(cmd.charAt(i + 5))) {
+                        if (s.equals(cmd.charAt(i + 6))) {
                             out.appendText(s);
                         }
-                        out.appendText(cmd.substring(i + 5, i + 7));
+                        out.appendText(cmd.substring(i + 5, i +8 ));
 
-                        if(cmd.charAt(i+8)=='d' && cmd.charAt(i+9)=='o' && cmd.charAt(i+10)=='w'
-                                && cmd.charAt(i+11)=='n' && cmd.charAt(i+12)=='t' && cmd.charAt(i+13)=='o'){
+                        if(cmd.charAt(i+10)=='d' && cmd.charAt(i+11)=='o' && cmd.charAt(i+12)=='w'
+                                && cmd.charAt(i+13)=='n' && cmd.charAt(i+14)=='t' && cmd.charAt(i+15)=='o'){
 
                             System.out.println("------------------");
-                            out.appendText(" ; "+ cmd.charAt(i + 4) + "<=" + cmd.charAt(i+15) + " ; i--){\n\n\t}");
+                            out.appendText(" ; "+ cmd.charAt(i + 4) + "<=" + cmd.charAt(i+17) + " ; " + cmd.charAt(i + 4)+ "--){\n\n\t}");
                             break;
                         }
 
-                        if (cmd.charAt(i+8)=='t' && cmd.charAt(i+9)=='o') {
+                        if (cmd.charAt(i+10)=='t' && cmd.charAt(i+11)=='o') {
                             out.appendText("; "+cmd.charAt(i + 4)+" <= ");
-                            out.appendText(cmd.substring(i+10, cmd.length()));
+                            out.appendText(cmd.substring(i+12, cmd.length()));
                             out.appendText("; " + cmd.charAt(i + 4)+"++){\n\n\t}");
                             break;
                         }
@@ -595,6 +628,70 @@ public class Type_Var extends ToDo1 implements Initializable {
         }catch(StringIndexOutOfBoundsException e){
             System.out.println(e);
         }
+       }
+
+       public void Algo_Conversion(String algo)throws IOException{
+
+           try{
+                File file = new File("comment.txt");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(algo);
+            bw.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+               fileWriter(new File("comment.txt"),print1);
+           readFile("comment.txt");
+
+           long lines = 0;
+
+           try (InputStream is = new BufferedInputStream(new FileInputStream("comment.txt"))) {
+               byte[] c = new byte[1024];
+               int count = 0;
+               int rc = 0;
+               boolean nLine = false;
+               File file = new File("comment.txt");
+               Scanner sc = new Scanner(file);
+               System.out.println("Reading File");
+               FileReader fr=new FileReader(file);
+               BufferedReader br=new BufferedReader(fr);
+               StringBuffer sb=new StringBuffer();
+               while ((rc = is.read(c)) != -1) {
+                   for (int i = 0; i < rc; ++i) {
+                       if (c[i] == '\n'){
+                           ++count;
+                       }
+                    }
+                   nLine = (c[rc - 1] != '\n');
+               }
+               if (nLine) {
+                   ++count;
+               }
+               lines = count;
+
+               for (int i = 1; i <= count; i++) {
+                   if (i == 1) {
+                        out.appendText("\nvoid "+ br.readLine() + "{");
+
+                   }
+                   else {
+                       while(i!=count+1 ){
+                           AllCommand(br.readLine());
+                       }
+                   }
+               }
+              // System.out.println(" The specific Line is: " + text);
+               out.appendText("\nint main(){\n");
+               System.out.println("Lines number " + lines);
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+
        }
 
 }
