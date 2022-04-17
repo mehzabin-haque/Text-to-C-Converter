@@ -1,6 +1,6 @@
+int b
 null 
-null 
-null 
+null ((a+b)*b)
 null 
 	
 Button[id=loop, styleClass=button]'Loop' 
