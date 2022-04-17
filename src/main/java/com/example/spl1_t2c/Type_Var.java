@@ -9,11 +9,7 @@ import javafx.scene.control.*;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.util.*;
 
 public class Type_Var extends ToDo1 implements Initializable {
 
@@ -106,7 +102,6 @@ public class Type_Var extends ToDo1 implements Initializable {
         }
         out.appendText(";\n");
     }
-
     void inputFunction(String line)
     {
         String x = null;
@@ -163,7 +158,6 @@ public class Type_Var extends ToDo1 implements Initializable {
         }
         return;
     }
-    //declares variable by acknowledging datatype
 
     void statement(String line)
     {
@@ -217,14 +211,15 @@ public class Type_Var extends ToDo1 implements Initializable {
         comb2.setItems(list3);
     }
 
-    public String removeDuplicates(String input){
-        String result = "";
-        for (int i = 0; i < input.length(); i++) {
-            if(!result.contains(String.valueOf(input.charAt(i)))) {
-                result += String.valueOf(input.charAt(i));
+    public static ObservableList<String> removeDuplicates(ObservableList<String> list)
+    {
+        ObservableList<String> newList = FXCollections.observableArrayList();
+        for (String element : list) {
+            if (!newList.contains(element)) {
+                newList.add(element);
             }
         }
-        return result;
+        return  newList;
     }
 
     public static void appendStrToFile(String fileName, String str) {
@@ -322,18 +317,22 @@ public class Type_Var extends ToDo1 implements Initializable {
         String s = comb1.getSelectionModel().getSelectedItem();
 
         ObservableList<String> list = FXCollections.observableArrayList(comb2.getItems());
+        ObservableList<String> var_All = null;
         list.add(var_name.getText());
         boolean b = varName.isEmpty();
         if(var_name != null && !b){
            // removeDuplicates(varName);
-            comb2.setItems(list);
+            ObservableList<String> rd = removeDuplicates(list);
+            var_All = rd;
+            comb2.setItems( rd);
+
         }
 
         ObservableList<String> list2 = FXCollections.observableArrayList(comb4.getItems());
         list2.add(var_name.getText());
         if(var_name != null && !b){
-            // removeDuplicates(varName);
-            comb4.setItems(list);
+            ObservableList<String> rd = removeDuplicates(list);
+            comb4.setItems( rd);
         }
 
         String vaLue = value.getText();
@@ -347,12 +346,18 @@ public class Type_Var extends ToDo1 implements Initializable {
         String comm = loop_command.getText();
         String algo = print1.getText();
 
+
             out.setText("#include<iostream> " +
                     "\nusing namespace std;");
 
             Algo_Conversion(algo);
 
-            out.appendText("\nint main(){\n");
+            if(algo.isEmpty()){
+                out.appendText("\nint main(){");
+            }
+            else{
+                out.appendText("\n}\nint main(){\n");
+            }
 
             try {
                 BufferedWriter out = new BufferedWriter(new FileWriter("main.txt"));
@@ -435,7 +440,10 @@ public class Type_Var extends ToDo1 implements Initializable {
         }
 
         If_else(if1,cond,inCond, varName);
-        AllCommand(comment);
+        String varAll = list2.toString();
+        Operand op = new Operand();
+        String var_all = var_All.toString();
+        op.Operand_Checking(opera,var_all,error,out);
 
         boolean c = comment.isEmpty();
         if(comment == null && c) {
@@ -521,89 +529,89 @@ public class Type_Var extends ToDo1 implements Initializable {
         myWriter.append("\n"+inComm);
     }
 
-    public void AllCommand(String cmd)throws IOException{
+    Stack<Integer> stack = new Stack<>();
+    Stack<String> str = new Stack<>();
+    ArrayList<String> cond = new ArrayList<>(Arrays.asList("if","else","for","while","do"));
+
+    public int AllCommand(String cmd)throws IOException {
         int c = countSpace(cmd);
+        //stack.push(c);
         System.out.println(c);
+        for(int j=0;j<countSpace(cmd);j++){
+            out.appendText(" ");
+        }
+
         try {
             for (int i = 0; i < cmd.length(); i++) {
-                if(i+2 < cmd.length()){
+                if (i + 2 < cmd.length()) {
 
-                    if(cmd.charAt(i)=='p'&& cmd.charAt(i+1)=='r' && cmd.charAt(i+2)=='i'){
-                        out.appendText("cout << " + cmd.charAt(i+6));
-                    }
                     String s1 = "downto";
-                    if (cmd.charAt(i)=='f' && cmd.charAt(i+1)=='o' && cmd.charAt(i+2)=='r') {
-
-                        out.appendText("\n\nfor (int " + cmd.charAt(i + 4));
+                    if (cmd.charAt(i) == 'f' && cmd.charAt(i + 1) == 'o' && cmd.charAt(i + 2) == 'r') {
+                        out.appendText("\nfor (int " + cmd.charAt(i + 4));
                         String s = "=";
                         if (s.equals(cmd.charAt(i + 6))) {
                             out.appendText(s);
                         }
-                        out.appendText(cmd.substring(i + 5, i +8 ));
+                        out.appendText(cmd.substring(i + 5, i + 9));
 
-                        if(cmd.charAt(i+10)=='d' && cmd.charAt(i+11)=='o' && cmd.charAt(i+12)=='w'
-                                && cmd.charAt(i+13)=='n' && cmd.charAt(i+14)=='t' && cmd.charAt(i+15)=='o'){
+                        if (cmd.charAt(i + 10) == 'd' && cmd.charAt(i + 11) == 'o' && cmd.charAt(i + 12) == 'w'
+                                && cmd.charAt(i + 13) == 'n' && cmd.charAt(i + 14) == 't' && cmd.charAt(i + 15) == 'o') {
 
-                            System.out.println("------------------");
-                            out.appendText(" ; "+ cmd.charAt(i + 4) + "<=" + cmd.charAt(i+17) + " ; " + cmd.charAt(i + 4)+ "--){\n\n\t}");
+                            out.appendText(" ; " + cmd.charAt(i + 4) + "<=" + cmd.charAt(i + 17) + " ; " + cmd.charAt(i + 4) + "--){");
                             break;
                         }
 
-                        if (cmd.charAt(i+10)=='t' && cmd.charAt(i+11)=='o') {
-                            out.appendText("; "+cmd.charAt(i + 4)+" <= ");
-                            out.appendText(cmd.substring(i+12, cmd.length()));
-                            out.appendText("; " + cmd.charAt(i + 4)+"++){\n\n\t}");
+                        if (cmd.charAt(i + 10) == 't' && cmd.charAt(i + 11) == 'o') {
+                            out.appendText("; " + cmd.charAt(i + 4) + " <= ");
+                            out.appendText(cmd.substring(i + 12, cmd.length()));
+                            out.appendText("; " + cmd.charAt(i + 4) + "++){");
                             break;
                         }
                     }    //String s1 = "to";
 
 
-                    else if ((cmd.charAt(i)=='i' && cmd.charAt(i+1)=='f') ) {
+                    else if ((cmd.charAt(i) == 'i' && cmd.charAt(i + 1) == 'f')) {
                         out.appendText("\n\tif(");
-                        out.appendText(cmd.substring(i+2,cmd.length()));
+                        out.appendText(cmd.substring(i + 2, cmd.length()));
                         out.appendText(" ){\n\n\t}");
                         break;
-                    }
-
-                    else if (cmd.charAt(i)=='e' && cmd.charAt(i+1)=='l' && cmd.charAt(i+2)=='s' && cmd.charAt(i+3)=='e'
-                            && cmd.charAt(i+4)=='i' && cmd.charAt(i+5)=='f'){
+                    } else if (cmd.charAt(i) == 'e' && cmd.charAt(i + 1) == 'l' && cmd.charAt(i + 2) == 's' && cmd.charAt(i + 3) == 'e'
+                            && cmd.charAt(i + 4) == 'i' && cmd.charAt(i + 5) == 'f') {
 
                         out.appendText("else if(");
-                        out.appendText(cmd.substring(i+6,cmd.length()));
+                        out.appendText(cmd.substring(i + 6, cmd.length()));
                         out.appendText(" ){");
                         break;
-                    }
-
-                    else if(cmd.charAt(i)=='e' && cmd.charAt(i+1)=='l' && cmd.charAt(i+2)=='s' && cmd.charAt(i+3)=='e'){
+                    } else if (cmd.charAt(i) == 'e' && cmd.charAt(i + 1) == 'l' && cmd.charAt(i + 2) == 's' && cmd.charAt(i + 3) == 'e') {
                         out.appendText("else(");
-                        out.appendText(cmd.substring(i+4,cmd.length()));
+                        out.appendText(cmd.substring(i + 4, cmd.length()));
                         out.appendText(" ){");
                         break;
-                    }
-                    else if(cmd.charAt(i)=='e' && cmd.charAt(i+1)=='x' && cmd.charAt(i+2)=='c'){
-                        out.appendText("\n\nswap(" + cmd.substring(i+8,i+13) + " , "+cmd.substring(i+19,cmd.length()) + ") ;");
+                    } else if (cmd.charAt(i) == 'e' && cmd.charAt(i + 1) == 'x' && cmd.charAt(i + 2) == 'c') {
+                        out.appendText("\n\nswap(" + cmd.substring(i + 8, i + 13) + " , " + cmd.substring(i + 19, cmd.length()) + ") ;");
                         break;
-                    }
-
-                    else if(cmd.charAt(i)=='w' && cmd.charAt(i+1)=='h' && cmd.charAt(i+2)=='i' && cmd.charAt(i+3)=='l' && cmd.charAt(i+4)=='e'){
-                        out.appendText("\n\nwhile(" + cmd.substring(i+5,i+9) );
+                    } else if (cmd.charAt(i) == 'p' && cmd.charAt(i + 1) == 'r' && cmd.charAt(i + 2) == 'i') {
+                        out.appendText("cout << " + cmd.charAt(i + 6));
+                    } else if (cmd.charAt(i) == 'w' && cmd.charAt(i + 1) == 'h' && cmd.charAt(i + 2) == 'i' && cmd.charAt(i + 3) == 'l' && cmd.charAt(i + 4) == 'e') {
+                        out.appendText("\nwhile(" + cmd.substring(i + 5, i + 9));
                         //" ){\n\n\t}"
 
-                         if(cmd.charAt(i+9) ==' '){
-                            out.appendText(" ){\n "+ cmd.charAt(i+6)+"++; \n\t}");
+//                         if(cmd.charAt(i+9) ==' '){
+//                            out.appendText(" ){\n "+ cmd.charAt(i+6)+"++; \n\t");
+//                        }
+
+                        if (cmd.charAt(i + 10) == 'a' && cmd.charAt(i + 11) == 'n' && cmd.charAt(i + 12) == 'd') {
+                            out.appendText(" && " + cmd.substring(i + 14, cmd.length()) + " ){");
+                        } else if (cmd.charAt(i + 9) == ' ') {
+                            out.appendText(cmd.substring(i + 9, cmd.length()));
                         }
 
-                        if(cmd.charAt(i+10)=='a' && cmd.charAt(i+11)=='n' && cmd.charAt(i+12)=='d'){
-                            out.appendText(" && " + cmd.substring(i+13,cmd.length()) + " ){\n\n\t}");
-                        }
                         break;
-                    }
-                    else if((cmd.charAt(i)=='a' && cmd.charAt(i+1)=='n' && cmd.charAt(i+2)=='d')){
+
+                    } else if ((cmd.charAt(i) == 'a' && cmd.charAt(i + 1) == 'n' && cmd.charAt(i + 2) == 'd')) {
                         out.appendText(" && ");
                         break;
-                    }
-
-                    else if(cmd.charAt(i)=='/' && cmd.charAt(i+1)=='/'){
+                    } else if (cmd.charAt(i) == '/' && cmd.charAt(i + 1) == '/') {
                         out.appendText("\n  " + cmd.substring(i));
                         break;
                     }
@@ -613,22 +621,70 @@ public class Type_Var extends ToDo1 implements Initializable {
 //                        break;
 //                    }
 
-                    else if(cmd.charAt(i)=='r' && cmd.charAt(i+1)=='e' && cmd.charAt(i+2)=='t'){
-                        out.appendText("\n"+cmd.substring(i,cmd.length()) + " ;");
+                    else if (cmd.charAt(i) == 'r' && cmd.charAt(i + 1) == 'e' && cmd.charAt(i + 2) == 't') {
+                        out.appendText("\n" + cmd.substring(i, cmd.length()) + " ;");
                         break;
-                    }
-
-                    else{
-                        out.appendText("\n"+cmd.substring(i,cmd.length())+ " ;");
+                    } else if (cmd.charAt(i) != ' ') {
+                        out.appendText("\n" + cmd.substring(i, cmd.length()) + " ;");
                         break;
                     }
                 }
 
             }
-        }catch(StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println(e);
         }
-       }
+        if(stack.size()==0){
+            stack.push(c);
+        }
+        else if(stack.peek() < c){
+            stack.push(c);
+        }
+        else if(stack.peek()>c){
+            while(!stack.empty() && stack.peek()>c ){
+                stack.pop();
+                out.appendText("\n");
+                for(int j=0;j<countSpace(cmd);j++){
+                    out.appendText(" ");
+                }
+                out.appendText("}");
+            }
+            out.appendText("\n");
+            for(int j=0;j<countSpace(cmd);j++){
+                out.appendText(" ");
+            }
+            out.appendText("}");
+        }
+
+        System.out.println(stack);
+        if(!stack.empty()){
+            System.out.println(c + " " + cmd + " " + stack.peek());
+        }
+
+        else{
+            System.out.println(c + " " + cmd + " " );
+        }
+
+        //(int i=1;i<stack.lastElement();i++){
+        int up = stack.peek();
+        //int up2 = stack.pop();
+        //System.out.println(up + " \t" + up2);
+//        for (int i = 0; i < stack.lastElement(); i++) {
+//            System.out.println(stack.get(i) + " ==== ");
+//            if (stack.get(i) > c) {
+//                stack.push(c);
+//            }
+//            else if(stack.get(i) < c)
+//                stack.pop();
+//                if (cmd.charAt(1) == '/' && cmd.charAt(2) == '/') {
+//                    break;
+//                } else {
+//                    //stack.pop();
+//                    out.appendText("\n\t}");
+//                }
+//            }
+        return c;
+    }
 
        public void Algo_Conversion(String algo)throws IOException{
 
@@ -657,7 +713,7 @@ public class Type_Var extends ToDo1 implements Initializable {
                boolean nLine = false;
                File file = new File("comment.txt");
                Scanner sc = new Scanner(file);
-               System.out.println("Reading File");
+               System.out.println("***************************");
                FileReader fr=new FileReader(file);
                BufferedReader br=new BufferedReader(fr);
                StringBuffer sb=new StringBuffer();
@@ -677,16 +733,22 @@ public class Type_Var extends ToDo1 implements Initializable {
                for (int i = 1; i <= count; i++) {
                    if (i == 1) {
                         out.appendText("\nvoid "+ br.readLine() + "{");
-
                    }
                    else {
-                       while(i!=count+1 ){
-                           AllCommand(br.readLine());
+                       try {
+                           String prev = null;
+                           while (i < count + 1) {
+                               //stack.push(0);
+                               AllCommand(br.readLine());
+                              // stack.clear();
+                           }
+                       }catch(Exception e){
+                           System.out.println(e);
                        }
                    }
                }
-              // System.out.println(" The specific Line is: " + text);
-               out.appendText("\nint main(){\n");
+
+               System.out.println(stack);
                System.out.println("Lines number " + lines);
            } catch (IOException e) {
                e.printStackTrace();
