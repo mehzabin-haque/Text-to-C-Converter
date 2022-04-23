@@ -11,7 +11,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
-public class Type_Var extends ToDo1 implements Initializable {
+public class Type_Var  implements Initializable {
 
     @FXML
     public TextField print = new TextField("");
@@ -191,15 +191,7 @@ public class Type_Var extends ToDo1 implements Initializable {
         {
             c = String.valueOf(line.charAt(i+1));
         }
-        //cout<<"if "<<algoIndent.top()<<endl;
-    }
-    //handles if conditions
 
-    boolean substring1(String line) {
-        String s="print";
-            if(s==line)
-                return true;
-        return true;
     }
 
     public void initialize(URL url, ResourceBundle rb) {
@@ -439,10 +431,19 @@ public class Type_Var extends ToDo1 implements Initializable {
             }
         }
 
-        If_else(if1,cond,inCond, varName);
-        String varAll = list2.toString();
         Operand op = new Operand();
         String var_all = var_All.toString();
+
+        If_ElseCommand ifCheck = new If_ElseCommand();
+        ifCheck.If_else(if1,cond,inCond, varName, error, out);
+
+        if(all != null){
+            out.appendText("\n " + all + " = ");
+        }
+
+        else{
+            out.appendText("\n");
+        }
         op.Operand_Checking(opera,var_all,error,out);
 
         boolean c = comment.isEmpty();
@@ -477,44 +478,6 @@ public class Type_Var extends ToDo1 implements Initializable {
             out.appendText("\nvoid " + Arrays.toString(inp.split(",")));
             if(inp.charAt(i) == ','){
                 out.appendText(inp.replace(',',';'));
-            }
-        }
-    }
-
-    public void If_else(String if1,String cond,String inCond,String varName) throws Exception{
-        if (if1 != null) {
-
-            if (if1 != "else") {
-
-                if (cond.isEmpty()) {
-                    error.setText(" Condition of if and else-if \n statement is needed ");
-
-                } else if (cond != null && !cond.isEmpty()) {
-                    error.setText("");
-                    if (if1 == "if") {
-                        out.appendText(" \n " + if1 + " ( " + cond + " ) {");
-                    }
-                    if (if1 == "else if") {
-                        out.appendText(" \n " + if1 + " ( " + cond + " ) {");
-                    }
-
-                }
-            } else if (if1 == "else") {
-                out.appendText(" \nelse { ");
-            }
-
-            if (inCond == null) {
-                out.appendText("\n");
-            }
-            if (inCond != null) {
-                if (substring1(inCond)) {
-                    out.appendText("\n \t cout <<  " + varName + " ;" + "\n\t}");
-//                        if (substring2(varName)) {
-//                            out.appendText(inCond.substring(6) + " ;" + "\n\t}");
-//                        }
-                } else {
-                    out.appendText("\n \t " + inCond + ";" + "\n\t} ");
-                }
             }
         }
     }
@@ -756,5 +719,11 @@ public class Type_Var extends ToDo1 implements Initializable {
 
        }
 
+    public void Start(ActionEvent event) {
+        out.appendText("#include<iostream>\n" +
+                "using namespace std;\n" +
+                "int main()\n" +
+                "{\n" );
+    }
 }
 
