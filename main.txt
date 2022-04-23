@@ -1,6 +1,6 @@
-int b
-null 
-null ((a+b)*b)
-null 
-	
+int a
+a 5
+a a+b
+if a>5
+	print a
 Button[id=loop, styleClass=button]'Loop' 
