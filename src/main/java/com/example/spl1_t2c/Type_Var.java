@@ -9,6 +9,8 @@ import javafx.scene.control.*;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class Type_Var  implements Initializable {
@@ -27,12 +29,14 @@ public class Type_Var  implements Initializable {
     public Label sout;
     public Label error;
     public TextArea out;
-    public Button loop;
     public ComboBox <String> comb1 ;
     public ComboBox <String> comb2 ;
     public ComboBox <String> comb3;
     public ComboBox <String> comb4 ;
-    private boolean[] dataType;
+    public ComboBox <String> comb5 ;
+    Stack<Integer> stack = new Stack<>();
+    Stack<String> str = new Stack<>();
+    ArrayList<String> cond = new ArrayList<>(Arrays.asList("if","else","for","while","do"));
 
     public void fileWriter(File savePath, TextArea textArea) {
         try {
@@ -44,63 +48,6 @@ public class Type_Var  implements Initializable {
             e.printStackTrace();
         }
 
-    }
-
-    void printFunction(String line)
-    {
-       // while(sc.hasNextLine()) {
-
-//                                       for (int j = 0; j <= sc.nextLine().length(); j++) {
-//                                           if(count ==1){
-//                                               if (sc.nextLine().charAt(i) == '(') {
-//                                                   System.out.println("  ++++++++++++++++++ ");
-//                                                   out.appendText("\nvoid " + br.readLine());
-//                                                   out.appendText(sc.nextLine().replace(',',';'));
-//                                                   break;
-//
-//                                               }
-//                                           }
-//                                       }
-// break;
-// }
-//sc.close();
-//                               for(int i=0;i<algo.length();i++){
-//                                   if(algo.charAt(i) == '('){
-//                                       out.appendText(algo);
-//                                   }
-//                               }
-        int algoIndent;
-        //int i=7+algoIndent.top();
-        //code<<indent.top()<<"cout <<";\\
-        int i=0;
-        while(i<line.length())
-        {
-            if(line.charAt(i)=='"')
-            {
-                i++;
-                while(line.charAt(i)!='"')
-                    out.appendText(String.valueOf(line.charAt(i++)));
-                i++;
-            }
-            else if(line.charAt(i)==' ' || line.charAt(i)==',' || line.charAt(i)==')')
-            {
-                if(line.charAt(i)==',')
-
-                i++;
-            }
-            else
-            {
-                while((line.charAt(i)>='a' && line.charAt(i)<='z')
-                        || (line.charAt(i)>='A' &&line.charAt(i)<='Z') ||line.charAt(i)=='_'
-                        || line.charAt(i)=='+' || line.charAt(i)=='-' || line.charAt(i)=='*'
-                        || line.charAt(i)=='/' || line.charAt(i)=='%' )
-                {
-                    out.appendText(String.valueOf(line.charAt(i)));
-                }
-            }
-
-        }
-        out.appendText(";\n");
     }
     void inputFunction(String line)
     {
@@ -120,7 +67,7 @@ public class Type_Var  implements Initializable {
                     i++;
                 else
                 {
-                   // x.push_back(line[i]);
+                    // x.push_back(line[i]);
                     i++;
                 }
             }
@@ -168,7 +115,62 @@ public class Type_Var  implements Initializable {
         out.appendText(String.valueOf(line.charAt(i)));
         return;
     }
-    //handles a general statement
+    void printFunction(String line)
+    {
+        // while(sc.hasNextLine()) {
+
+//                                       for (int j = 0; j <= sc.nextLine().length(); j++) {
+//                                           if(count ==1){
+//                                               if (sc.nextLine().charAt(i) == '(') {
+//                                                   System.out.println("  ++++++++++++++++++ ");
+//                                                   out.appendText("\nvoid " + br.readLine());
+//                                                   out.appendText(sc.nextLine().replace(',',';'));
+//                                                   break;
+//
+//                                               }
+//                                           }
+//                                       }
+// break;
+// }
+//sc.close();
+//                               for(int i=0;i<algo.length();i++){
+//                                   if(algo.charAt(i) == '('){
+//                                       out.appendText(algo);
+//                                   }
+//                               }
+        int algoIndent;
+        //int i=7+algoIndent.top();
+        //code<<indent.top()<<"cout <<";\\
+        int i=0;
+        while(i<line.length())
+        {
+            if(line.charAt(i)=='"')
+            {
+                i++;
+                while(line.charAt(i)!='"')
+                    out.appendText(String.valueOf(line.charAt(i++)));
+                i++;
+            }
+            else if(line.charAt(i)==' ' || line.charAt(i)==',' || line.charAt(i)==')')
+            {
+                if(line.charAt(i)==',')
+
+                    i++;
+            }
+            else
+            {
+                while((line.charAt(i)>='a' && line.charAt(i)<='z')
+                        || (line.charAt(i)>='A' &&line.charAt(i)<='Z') ||line.charAt(i)=='_'
+                        || line.charAt(i)=='+' || line.charAt(i)=='-' || line.charAt(i)=='*'
+                        || line.charAt(i)=='/' || line.charAt(i)=='%' )
+                {
+                    out.appendText(String.valueOf(line.charAt(i)));
+                }
+            }
+
+        }
+        out.appendText(";\n");
+    }
 
     void ifFunction(String line)
     {
@@ -201,6 +203,8 @@ public class Type_Var  implements Initializable {
         comb3.setItems(list2);
         ObservableList<String> list3 = FXCollections.emptyObservableList();
         comb2.setItems(list3);
+        ObservableList<String> list4 = FXCollections.observableArrayList("for", "while", "do while");
+        comb5.setItems(list4);
     }
 
     public static ObservableList<String> removeDuplicates(ObservableList<String> list)
@@ -228,7 +232,44 @@ public class Type_Var  implements Initializable {
         }
     }
 
-    int length(String line) {
+    public long numOfLines(String fileName){
+        readFile(fileName);
+
+        long lines = 0;
+
+        try (InputStream is = new BufferedInputStream(new FileInputStream(fileName))) {
+            byte[] c = new byte[1024];
+            int count = 0;
+            int rc = 0;
+            boolean nLine = false;
+            File file = new File(fileName);
+            Scanner sc = new Scanner(file);
+            System.out.println("***************************");
+            FileReader fr=new FileReader(file);
+            BufferedReader br=new BufferedReader(fr);
+            StringBuffer sb=new StringBuffer();
+            while ((rc = is.read(c)) != -1) {
+                for (int i = 0; i < rc; ++i) {
+                    if (c[i] == '\n'){
+                        ++count;
+                    }
+                }
+                nLine = (c[rc - 1] != '\n');
+            }
+            if (nLine) {
+                ++count;
+            }
+            lines = count;
+    } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return lines;
+    }
+
+        int length(String line) {
         int len=0;
         int i=0;
         while(line.charAt(i)!='\0')
@@ -299,12 +340,90 @@ public class Type_Var  implements Initializable {
         }
     }
 
+    public void deleteDuplicated(String filePath) throws IOException {
+        String input = null;
+        //Instantiating the Scanner class
+        Scanner sc = new Scanner(new File(filePath));
+        //Instantiating the FileWriter class
+        FileWriter writer = new FileWriter(filePath);
+        //Instantiating the Set class
+        Set set = new HashSet();
+        while (sc.hasNextLine()) {
+            input = sc.nextLine();
+            if(set.add(input)) {
+                writer.append(input+"\n");
+            }
+        }
+        writer.flush();
+        System.out.println("Contents added............");
+    }
+
+    public static long filesCompareByLine(Path path1, Path path2) throws IOException {
+        try (BufferedReader bf1 = Files.newBufferedReader(path1);
+             BufferedReader bf2 = Files.newBufferedReader(path2)) {
+
+            long lineNumber = 1;
+            String line1 = "", line2 = "";
+            while ((line1 = bf1.readLine()) != null) {
+                line2 = bf2.readLine();
+                if (line2 == null || !line1.equals(line2)) {
+                    return lineNumber;
+                }
+                lineNumber++;
+            }
+            if (bf2.readLine() == null) {
+                return -1;
+            }
+            else {
+                return lineNumber;
+            }
+        }
+    }
+
+    public static void copyData(File file1, File file2) throws Exception
+    {
+        FileInputStream iS = new FileInputStream(file1);
+        FileOutputStream oS = new FileOutputStream(file2);
+        try {
+
+            int i;
+            while ((i = iS.read()) != -1) {
+                oS.write(i);
+            }
+        }
+
+        catch(Exception e) {
+            System.out.println("Error Found: "+e.getMessage());
+        }
+
+        finally {
+            if (iS != null) {
+                iS.close();
+            }
+
+            if (oS != null) {
+                oS.close();
+            }
+        }
+    }
+
     public void Enter() throws Exception {
-        File f1 = new File("main.txt");
-        f1.createNewFile();
+        File f1 = new File("test.txt");
+        if(!f1.exists()){
+            f1.createNewFile();
+        }
+
+        File f2 = new File("ActualLoop.txt");
+        if(!f1.exists()){
+            f1.createNewFile();
+        }
+
+        File f3 = new File("IfElse.txt");
+        if(!f1.exists()){
+            f1.createNewFile();
+        }
 
         String comment = print.getText(); // print part
-
         String varName = var_name.getText(); // variable name
         String s = comb1.getSelectionModel().getSelectedItem();
 
@@ -313,7 +432,7 @@ public class Type_Var  implements Initializable {
         list.add(var_name.getText());
         boolean b = varName.isEmpty();
         if(var_name != null && !b){
-           // removeDuplicates(varName);
+            // removeDuplicates(varName);
             ObservableList<String> rd = removeDuplicates(list);
             var_All = rd;
             comb2.setItems( rd);
@@ -335,52 +454,87 @@ public class Type_Var  implements Initializable {
         String cond = condition.getText(); // condition of ifelse
         String inCond = inCondition.getText();  // condition er vitor ja thakbe
         String opera = operation.getText();
-        String comm = loop_command.getText();
         String algo = print1.getText();
+        String loop = comb5.getSelectionModel().getSelectedItem();
+        String comm = loop_command.getText();
 
 
-            out.setText("#include<iostream> " +
-                    "\nusing namespace std;");
+        out.setText("#include<iostream> " +
+                "\nusing namespace std;");
 
-            Algo_Conversion(algo);
+        Algo_Conversion(algo);
 
-            if(algo.isEmpty()){
-                out.appendText("\nint main(){");
+        if(algo.isEmpty()){
+            out.appendText("\nint main(){");
+        }
+        else{
+            out.appendText("\n}\nint main(){\n");
+        }
+
+        int n=0;
+
+        if( s != null && varName != null ){
+            appendStrToFile("test.txt",s+" "+varName + "\n");
+            appendStrToFile("Loop.txt",s+" "+varName + "\n");
+        }
+
+        if(varNum != null && vaLue != null){
+            if(s == "char"){
+                appendStrToFile("test.txt", "\n"+varNum+" = ' "+vaLue + " ' var\n" );
+                appendStrToFile("Loop.txt", "\n"+varNum+" = ' "+vaLue + " ' var\n" );
             }
             else{
-                out.appendText("\n}\nint main(){\n");
+                appendStrToFile("test.txt", "\n"+varNum+" = "+vaLue + " var\n" );
+                appendStrToFile("Loop.txt", "\n"+varNum+" = "+vaLue + " var\n" );
             }
 
-            try {
-                BufferedWriter out = new BufferedWriter(new FileWriter("main.txt"));
-                out.write(s + " " + varName);
-                out.close();
-            }
-            catch (IOException e) {
-                System.out.println("Exception Occurred" + e);
+        }
+
+        if( opera != null && !opera.isEmpty()){
+            if(all != null && opera != null){
+                appendStrToFile("test.txt", all + " = " + opera + " op\n" );
+                appendStrToFile("Loop.txt", all + " = " + opera + " op\n" );
             }
 
-        appendStrToFile("main.txt", "\n"+varNum+" "+vaLue);
-        appendStrToFile("main.txt", "\n" + all + " " + opera);
-        appendStrToFile("main.txt", "\n" + if1 + " " + cond + "\n\t"+inCond);
-        appendStrToFile("main.txt", "\n" + loop + " " + comm);
+            else {
+                appendStrToFile("test.txt", opera + " op\n" );
+                appendStrToFile("Loop.txt", opera + " op\n" );
+            }
+
+        }
+
+        CommandCheck cc = new CommandCheck();
+        cc.OpCheck("Loop.txt",out,error);
+
+        if(if1 != null && cond != null && inCond != null){
+            appendStrToFile("test.txt", if1 );
+            appendStrToFile("IfElse.txt", if1 + " " + cond + "\n\t"+inCond + "\n");
+        }
+
+        if(loop != null && comm != null){
+            appendStrToFile("test.txt",  loop );
+            appendStrToFile("ActualLoop.txt",  loop + "\t" + comm +"\n" );
+
+        }
 
         if (varName != null && s == null) {
             //comb1.setOnAction(e -> error.setText(" Variable type is not declared "));
-           // error.setText(" Variable type is not declared ");
+            // error.setText(" Variable type is not declared ");
         }
 
-        else if (s != null && varName == null) {
+        else if (s != null && varName == null)
+        {
             error.setText(" Variable name is not declared ");
         }
 
-        else if (varName == null && s == null) {
+        else if (varName == null && s == null)
+        {
             //out.setText("\n");
             out.appendText("");
         }
 
-        else if (varName != null && s != null ) {
-            out.appendText("\n " + s + " " + varName + " ;");
+        else if (varName != null && s != null )
+        {
             //comb2.getItems().add(var_name.getText());
 //            if(varNum == null){
 //                out.appendText("");
@@ -388,21 +542,21 @@ public class Type_Var  implements Initializable {
             if (value != null && !val) {
                 if (s == "int") {
                     try {
-                         int check = Integer.parseInt(vaLue);
+                        int check = Integer.parseInt(vaLue);
                     } catch (NumberFormatException nfe) {
                         error.setText("It's not an Integer Value.\nUse values like '5' not " + vaLue );
                     }
                 }
                 else if (s == "float") {
                     try {
-                       float check = Float.parseFloat(vaLue);
+                        float check = Float.parseFloat(vaLue);
                     } catch (NumberFormatException nfe) {
                         error.setText("It's not a Float Value.\nUse values like '5.0' not " + vaLue);
                     }
                 }
                 else if (s == "double") {
                     try {
-                          double d = Double.parseDouble(vaLue);
+                        double d = Double.parseDouble(vaLue);
                     } catch (NumberFormatException nfe) {
                         error.setText("It's not a Double Value.\nUse values like '5.000' not " + vaLue);
                     }
@@ -421,30 +575,8 @@ public class Type_Var  implements Initializable {
                 else {
                     System.out.println("void ");
                 }
-
-                if(s == "char"){
-                    out.appendText("\n" + varNum + " = '" + vaLue + "' ;");
-                }
-                else{
-                    out.appendText("\n" + varNum + " = " + vaLue + " ;");
-                }
             }
         }
-
-        Operand op = new Operand();
-        String var_all = var_All.toString();
-
-        If_ElseCommand ifCheck = new If_ElseCommand();
-        ifCheck.If_else(if1,cond,inCond, varName, error, out);
-
-        if(all != null){
-            out.appendText("\n " + all + " = ");
-        }
-
-        else{
-            out.appendText("\n");
-        }
-        op.Operand_Checking(opera,var_all,error,out);
 
         boolean c = comment.isEmpty();
         if(comment == null && c) {
@@ -457,17 +589,78 @@ public class Type_Var  implements Initializable {
         if(comment == null && varName == null && s == null && if1 == null){
             out.appendText("");
         }
-        try {
-            BufferedReader in = new BufferedReader(
-                    new FileReader("main.txt"));
 
-            String mystring;
-            while ((mystring = in.readLine()) != null) {
-                System.out.println(mystring);
-            }
-        }
-        catch (IOException e) {
-            System.out.println("Exception Occurred" + e);
+
+            long count = numOfLines("test.txt");
+            FileReader fr=new FileReader("test.txt");
+            BufferedReader br = new BufferedReader(fr);
+            AlgoCommand ac = new AlgoCommand();
+
+        for (int i = 1; i <= count; i++) {
+                try {
+                    while (i < count + 1) {
+                       String str = br.readLine();
+                        String str1 ,prev = null;
+                           if(str.contains("int") || str.contains("float") ||
+                                    str.contains("double") || str.contains("long") || str.contains("char")){
+
+                                VarNameCheck vr = new VarNameCheck();
+                                vr.checkVarName(varName,error);
+                                if(str.contains("char")){
+
+                                    out.appendText("\n" + str + " ;");
+                                }
+                                else{
+                                    out.appendText("\n" + str + " ;");
+                                }
+
+//                           if(str.contains(varName) ){
+//                               error.setText("Variable Name is already declared ");
+//                               break;
+//                           }
+                                for(int j=0;j<str.length();j++){
+                                    if(str.charAt(j)==' '){
+                                        prev = str.substring(j+1,str.length());
+                                        break;
+                                    }
+                                }
+
+                            }
+
+                            else if(str.contains(" op")){
+                                str = str.replace(" op"," ");
+
+                                Operand op = new Operand();
+                                out.appendText("\n" + str + ";\n");
+
+                                if(var_All.toString() != null){
+                                    op.Operand_Checking(opera,var_All.toString(),error,out);
+                                }
+                            }
+
+                            else if(str.contains("=") && str.contains("var")){
+                                str = str.replace("var"," ");
+                                System.out.println("lalalala");
+                                out.appendText("\n" + str + " ;");
+                            }
+
+                            else if (str.contains("if") || str.contains("else if") || str.contains("else")){
+                                If_ElseCommand ie = new If_ElseCommand();
+                                ie.If_else(if1,cond,inCond,error,out,stack);
+                            }
+
+                            else if(str.contains("for ") || str.contains("while ") || str.contains("do while ") ){
+                                System.out.println("lalala))))))");
+                                Loop lp = new Loop();
+                                lp.nestedLoop(loop,comm,out);
+                            }
+                            else{
+                                break;
+                            }
+                       }
+                }catch(Exception e){
+                    System.out.println(e);
+                }
         }
 
         out.appendText("\n return 0; \n}");
@@ -492,167 +685,12 @@ public class Type_Var  implements Initializable {
         myWriter.append("\n"+inComm);
     }
 
-    Stack<Integer> stack = new Stack<>();
-    Stack<String> str = new Stack<>();
-    ArrayList<String> cond = new ArrayList<>(Arrays.asList("if","else","for","while","do"));
-
-    public int AllCommand(String cmd)throws IOException {
-        int c = countSpace(cmd);
-        //stack.push(c);
-        System.out.println(c);
-        for(int j=0;j<countSpace(cmd);j++){
-            out.appendText(" ");
-        }
-
-        try {
-            for (int i = 0; i < cmd.length(); i++) {
-                if (i + 2 < cmd.length()) {
-
-                    String s1 = "downto";
-                    if (cmd.charAt(i) == 'f' && cmd.charAt(i + 1) == 'o' && cmd.charAt(i + 2) == 'r') {
-                        out.appendText("\nfor (int " + cmd.charAt(i + 4));
-                        String s = "=";
-                        if (s.equals(cmd.charAt(i + 6))) {
-                            out.appendText(s);
-                        }
-                        out.appendText(cmd.substring(i + 5, i + 9));
-
-                        if (cmd.charAt(i + 10) == 'd' && cmd.charAt(i + 11) == 'o' && cmd.charAt(i + 12) == 'w'
-                                && cmd.charAt(i + 13) == 'n' && cmd.charAt(i + 14) == 't' && cmd.charAt(i + 15) == 'o') {
-
-                            out.appendText(" ; " + cmd.charAt(i + 4) + "<=" + cmd.charAt(i + 17) + " ; " + cmd.charAt(i + 4) + "--){");
-                            break;
-                        }
-
-                        if (cmd.charAt(i + 10) == 't' && cmd.charAt(i + 11) == 'o') {
-                            out.appendText("; " + cmd.charAt(i + 4) + " <= ");
-                            out.appendText(cmd.substring(i + 12, cmd.length()));
-                            out.appendText("; " + cmd.charAt(i + 4) + "++){");
-                            break;
-                        }
-                    }    //String s1 = "to";
 
 
-                    else if ((cmd.charAt(i) == 'i' && cmd.charAt(i + 1) == 'f')) {
-                        out.appendText("\n\tif(");
-                        out.appendText(cmd.substring(i + 2, cmd.length()));
-                        out.appendText(" ){\n\n\t}");
-                        break;
-                    } else if (cmd.charAt(i) == 'e' && cmd.charAt(i + 1) == 'l' && cmd.charAt(i + 2) == 's' && cmd.charAt(i + 3) == 'e'
-                            && cmd.charAt(i + 4) == 'i' && cmd.charAt(i + 5) == 'f') {
+    public void Algo_Conversion(String algo)throws IOException{
 
-                        out.appendText("else if(");
-                        out.appendText(cmd.substring(i + 6, cmd.length()));
-                        out.appendText(" ){");
-                        break;
-                    } else if (cmd.charAt(i) == 'e' && cmd.charAt(i + 1) == 'l' && cmd.charAt(i + 2) == 's' && cmd.charAt(i + 3) == 'e') {
-                        out.appendText("else(");
-                        out.appendText(cmd.substring(i + 4, cmd.length()));
-                        out.appendText(" ){");
-                        break;
-                    } else if (cmd.charAt(i) == 'e' && cmd.charAt(i + 1) == 'x' && cmd.charAt(i + 2) == 'c') {
-                        out.appendText("\n\nswap(" + cmd.substring(i + 8, i + 13) + " , " + cmd.substring(i + 19, cmd.length()) + ") ;");
-                        break;
-                    } else if (cmd.charAt(i) == 'p' && cmd.charAt(i + 1) == 'r' && cmd.charAt(i + 2) == 'i') {
-                        out.appendText("cout << " + cmd.charAt(i + 6));
-                    } else if (cmd.charAt(i) == 'w' && cmd.charAt(i + 1) == 'h' && cmd.charAt(i + 2) == 'i' && cmd.charAt(i + 3) == 'l' && cmd.charAt(i + 4) == 'e') {
-                        out.appendText("\nwhile(" + cmd.substring(i + 5, i + 9));
-                        //" ){\n\n\t}"
-
-//                         if(cmd.charAt(i+9) ==' '){
-//                            out.appendText(" ){\n "+ cmd.charAt(i+6)+"++; \n\t");
-//                        }
-
-                        if (cmd.charAt(i + 10) == 'a' && cmd.charAt(i + 11) == 'n' && cmd.charAt(i + 12) == 'd') {
-                            out.appendText(" && " + cmd.substring(i + 14, cmd.length()) + " ){");
-                        } else if (cmd.charAt(i + 9) == ' ') {
-                            out.appendText(cmd.substring(i + 9, cmd.length()));
-                        }
-
-                        break;
-
-                    } else if ((cmd.charAt(i) == 'a' && cmd.charAt(i + 1) == 'n' && cmd.charAt(i + 2) == 'd')) {
-                        out.appendText(" && ");
-                        break;
-                    } else if (cmd.charAt(i) == '/' && cmd.charAt(i + 1) == '/') {
-                        out.appendText("\n  " + cmd.substring(i));
-                        break;
-                    }
-
-//                    else if(cmd.charAt(i)=='o' && cmd.charAt(i+1)=='r'){
-//                        out.appendText(" || ");
-//                        break;
-//                    }
-
-                    else if (cmd.charAt(i) == 'r' && cmd.charAt(i + 1) == 'e' && cmd.charAt(i + 2) == 't') {
-                        out.appendText("\n" + cmd.substring(i, cmd.length()) + " ;");
-                        break;
-                    } else if (cmd.charAt(i) != ' ') {
-                        out.appendText("\n" + cmd.substring(i, cmd.length()) + " ;");
-                        break;
-                    }
-                }
-
-            }
-        } catch (StringIndexOutOfBoundsException e) {
-            System.out.println(e);
-        }
-        if(stack.size()==0){
-            stack.push(c);
-        }
-        else if(stack.peek() < c){
-            stack.push(c);
-        }
-        else if(stack.peek()>c){
-            while(!stack.empty() && stack.peek()>c ){
-                stack.pop();
-                out.appendText("\n");
-                for(int j=0;j<countSpace(cmd);j++){
-                    out.appendText(" ");
-                }
-                out.appendText("}");
-            }
-            out.appendText("\n");
-            for(int j=0;j<countSpace(cmd);j++){
-                out.appendText(" ");
-            }
-            out.appendText("}");
-        }
-
-        System.out.println(stack);
-        if(!stack.empty()){
-            System.out.println(c + " " + cmd + " " + stack.peek());
-        }
-
-        else{
-            System.out.println(c + " " + cmd + " " );
-        }
-
-        //(int i=1;i<stack.lastElement();i++){
-        int up = stack.peek();
-        //int up2 = stack.pop();
-        //System.out.println(up + " \t" + up2);
-//        for (int i = 0; i < stack.lastElement(); i++) {
-//            System.out.println(stack.get(i) + " ==== ");
-//            if (stack.get(i) > c) {
-//                stack.push(c);
-//            }
-//            else if(stack.get(i) < c)
-//                stack.pop();
-//                if (cmd.charAt(1) == '/' && cmd.charAt(2) == '/') {
-//                    break;
-//                } else {
-//                    //stack.pop();
-//                    out.appendText("\n\t}");
-//                }
-//            }
-        return c;
-    }
-
-       public void Algo_Conversion(String algo)throws IOException{
-
-           try{
-                File file = new File("comment.txt");
+        try{
+            File file = new File("comment.txt");
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -664,60 +702,36 @@ public class Type_Var  implements Initializable {
         catch(Exception e){
             System.out.println(e);
         }
-               fileWriter(new File("comment.txt"),print1);
-           readFile("comment.txt");
+        fileWriter(new File("comment.txt"),print1);
+        readFile("comment.txt");
 
-           long lines = 0;
+        long count = numOfLines("comment.txt");
+        FileReader fr=new FileReader("comment.txt");
+        BufferedReader br = new BufferedReader(fr);
+            for (int i = 1; i <= count; i++) {
+                if (i == 1) {
+                    out.appendText("\nvoid "+ br.readLine() + "{");
+                }
+                else {
+                    try {
+                        String prev = null;
+                        while (i < count + 1) {
+                            //stack.push(0);
+                            AlgoCommand al = new AlgoCommand();
+                            al.AllCommand(br.readLine(),out,stack);
+                            // stack.clear();
+                        }
 
-           try (InputStream is = new BufferedInputStream(new FileInputStream("comment.txt"))) {
-               byte[] c = new byte[1024];
-               int count = 0;
-               int rc = 0;
-               boolean nLine = false;
-               File file = new File("comment.txt");
-               Scanner sc = new Scanner(file);
-               System.out.println("***************************");
-               FileReader fr=new FileReader(file);
-               BufferedReader br=new BufferedReader(fr);
-               StringBuffer sb=new StringBuffer();
-               while ((rc = is.read(c)) != -1) {
-                   for (int i = 0; i < rc; ++i) {
-                       if (c[i] == '\n'){
-                           ++count;
-                       }
+
+                    }catch(Exception e){
+                        System.out.println(e);
                     }
-                   nLine = (c[rc - 1] != '\n');
-               }
-               if (nLine) {
-                   ++count;
-               }
-               lines = count;
+                }
+            }
 
-               for (int i = 1; i <= count; i++) {
-                   if (i == 1) {
-                        out.appendText("\nvoid "+ br.readLine() + "{");
-                   }
-                   else {
-                       try {
-                           String prev = null;
-                           while (i < count + 1) {
-                               //stack.push(0);
-                               AllCommand(br.readLine());
-                              // stack.clear();
-                           }
-                       }catch(Exception e){
-                           System.out.println(e);
-                       }
-                   }
-               }
+            System.out.println(stack);
 
-               System.out.println(stack);
-               System.out.println("Lines number " + lines);
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-
-       }
+    }
 
     public void Start(ActionEvent event) {
         out.appendText("#include<iostream>\n" +
@@ -726,4 +740,3 @@ public class Type_Var  implements Initializable {
                 "{\n" );
     }
 }
-

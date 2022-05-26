@@ -14,7 +14,7 @@
    <center>
       <AnchorPane prefHeight="534.0" prefWidth="800.0" style="-fx-background-color: mediumpurple;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="start" layoutX="131.0" layoutY="29.0" mnemonicParsing="false" onAction="#Start" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Start" textFill="WHITE">
+            <Button fx:id="start" layoutX="131.0" layoutY="15.0" mnemonicParsing="false" onAction="#Start" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: black;" text="Start" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -25,28 +25,28 @@
                </font>
             </Button>
             <TextArea fx:id="out" layoutX="366.0" layoutY="15.0" prefHeight="484.0" prefWidth="410.0" style="-fx-background-color: transparent;" />
-            <ComboBox fx:id="comb1" layoutX="25.0" layoutY="75.0" prefWidth="150.0" promptText="var_type" />
-            <ComboBox fx:id="comb2" layoutX="25.0" layoutY="117.0" prefWidth="150.0" promptText="Variable" />
-            <TextField fx:id="var_name" layoutX="194.0" layoutY="75.0" promptText="var_name" />
-            <TextField fx:id="value" layoutX="194.0" layoutY="117.0" promptText="value" />
-            <ComboBox fx:id="comb3" layoutX="25.0" layoutY="202.0" prefWidth="150.0" promptText="Cond-Operation" />
-            <TextField fx:id="condition" layoutX="194.0" layoutY="202.0" promptText="condition" />
-            <TextField fx:id="inCondition" layoutX="54.0" layoutY="243.0" prefHeight="26.0" prefWidth="264.0" promptText="Command inside if else" />
-            <Label fx:id="error" layoutX="453.0" layoutY="414.0" prefHeight="63.0" prefWidth="235.0" textAlignment="CENTER" textFill="#ff8f8f">
+            <ComboBox fx:id="comb1" layoutX="25.0" layoutY="62.0" prefWidth="150.0" promptText="var_type" style="-fx-background-color: white;" />
+            <ComboBox fx:id="comb2" layoutX="25.0" layoutY="104.0" prefWidth="150.0" promptText="Variable" style="-fx-background-color: white;" />
+            <TextField fx:id="var_name" layoutX="192.0" layoutY="62.0" promptText="var_name" />
+            <TextField fx:id="value" layoutX="192.0" layoutY="104.0" promptText="value" />
+            <ComboBox fx:id="comb3" layoutX="25.0" layoutY="189.0" prefWidth="150.0" promptText="Cond-Operation" style="-fx-background-color: white;" />
+            <TextField fx:id="condition" layoutX="191.0" layoutY="189.0" prefHeight="21.0" prefWidth="150.0" promptText="condition" />
+            <Label fx:id="error" layoutX="377.0" layoutY="414.0" prefHeight="63.0" prefWidth="382.0" textAlignment="CENTER" textFill="#ec6c6c">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <Line endX="208.4000244140625" layoutX="568.0" layoutY="399.0" startX="-202.00003051757812" />
-            <TextField fx:id="loop_command" layoutX="194.0" layoutY="287.0" promptText="Command inside Loop" />
-            <ComboBox fx:id="comb4" layoutX="25.0" layoutY="161.0" prefWidth="150.0" promptText="All Variable" />
-            <TextField fx:id="operation" layoutX="194.0" layoutY="161.0" promptText="operations" />
-            <Button fx:id="loop" layoutX="24.0" layoutY="287.0" mnemonicParsing="false" onAction="#AllLoop" prefHeight="26.0" prefWidth="152.0" text="Loop" />
+            <ComboBox fx:id="comb4" layoutX="25.0" layoutY="147.0" prefWidth="150.0" promptText="All Variable" style="-fx-background-color: white;" />
+            <TextField fx:id="operation" layoutX="192.0" layoutY="146.0" prefHeight="26.0" prefWidth="151.0" promptText="operations" />
             <TextArea fx:id="print1" layoutX="26.0" layoutY="331.0" prefHeight="165.0" prefWidth="319.0" promptText="                                          ALGO">
                <font>
                   <Font name="Calibri Bold" size="14.0" />
                </font>
             </TextArea>
+            <ComboBox fx:id="comb5" layoutX="25.0" layoutY="280.0" prefWidth="150.0" promptText="Loop" style="-fx-background-color: white;" />
+            <TextField fx:id="inCondition" layoutX="50.0" layoutY="233.0" prefHeight="34.0" prefWidth="271.0" promptText="Command inside if else" />
+            <TextField fx:id="loop_command" layoutX="192.0" layoutY="280.0" prefHeight="21.0" prefWidth="150.0" promptText="Loop Command" />
          </children></AnchorPane>
    </center>
 </BorderPane>

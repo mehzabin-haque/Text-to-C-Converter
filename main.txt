@@ -1,6 +1,6 @@
-int a
-a 5
-a a+b
-if a>5
-	print a
+int b
+null 
+null 
+null 
+	
 Button[id=loop, styleClass=button]'Loop' 
