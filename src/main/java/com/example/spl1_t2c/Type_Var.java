@@ -714,6 +714,7 @@ public class Type_Var  implements Initializable {
         }
 
         out.appendText("\n return 0; \n}");
+        br.close();
     }
 
     public void Algo_Conversion2(String inp) {
@@ -734,8 +735,6 @@ public class Type_Var  implements Initializable {
         myWriter.write("for");
         myWriter.append("\n"+inComm);
     }
-
-
 
     public void Algo_Conversion(String algo)throws IOException{
         int dhur = 0;
