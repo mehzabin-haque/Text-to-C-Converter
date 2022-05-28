@@ -26,16 +26,16 @@ public class Type_Var  implements Initializable {
     public TextField loop_command = new TextField("");
     public Button start, enter;
     @FXML
-    public Label sout;
-    public Label error;
-    public TextArea out;
+    public Label sout = new Label("");;
+    public Label error = new Label("");;
+    public Label error1 = new Label("");
+    public TextArea out = new TextArea("");
     public ComboBox <String> comb1 ;
     public ComboBox <String> comb2 ;
     public ComboBox <String> comb3;
     public ComboBox <String> comb4 ;
     public ComboBox <String> comb5 ;
     Stack<Integer> stack = new Stack<>();
-    Stack<String> str = new Stack<>();
     ArrayList<String> cond = new ArrayList<>(Arrays.asList("if","else","for","while","do"));
 
     public void fileWriter(File savePath, TextArea textArea) {
@@ -215,6 +215,7 @@ public class Type_Var  implements Initializable {
                 newList.add(element);
             }
         }
+
         return  newList;
     }
 
@@ -244,7 +245,7 @@ public class Type_Var  implements Initializable {
             boolean nLine = false;
             File file = new File(fileName);
             Scanner sc = new Scanner(file);
-            System.out.println("***************************");
+           // System.out.println("***************************");
             FileReader fr=new FileReader(file);
             BufferedReader br=new BufferedReader(fr);
             StringBuffer sb=new StringBuffer();
@@ -414,13 +415,13 @@ public class Type_Var  implements Initializable {
         }
 
         File f2 = new File("ActualLoop.txt");
-        if(!f1.exists()){
-            f1.createNewFile();
+        if(!f2.exists()){
+            f2.createNewFile();
         }
 
         File f3 = new File("IfElse.txt");
-        if(!f1.exists()){
-            f1.createNewFile();
+        if(!f3.exists()){
+            f3.createNewFile();
         }
 
         String comment = print.getText(); // print part
@@ -457,6 +458,13 @@ public class Type_Var  implements Initializable {
         String algo = print1.getText();
         String loop = comb5.getSelectionModel().getSelectedItem();
         String comm = loop_command.getText();
+        ArrayList<String> int1 = new ArrayList<>();
+        ArrayList<String> double1 = new ArrayList<>();
+        ArrayList<String> float1 = new ArrayList<>();
+        ArrayList<String> long1 = new ArrayList<>();
+        ArrayList<String> char1 = new ArrayList<>();
+        ArrayList<String> actual = new ArrayList<>();
+        AlgoCommand ac = new AlgoCommand();
 
 
         out.setText("#include<iostream> " +
@@ -473,9 +481,14 @@ public class Type_Var  implements Initializable {
 
         int n=0;
 
-        if( s != null && varName != null ){
-            appendStrToFile("test.txt",s+" "+varName + "\n");
-            appendStrToFile("Loop.txt",s+" "+varName + "\n");
+        if( (s != null && varName != null)){
+            if(varName == null || varName.isEmpty()){
+                System.out.println("nothing");
+            }
+            else{
+                appendStrToFile("test.txt",s+" "+varName + "\n");
+                appendStrToFile("Loop.txt",s+" "+varName + "\n");
+            }
         }
 
         if(varNum != null && vaLue != null){
@@ -504,22 +517,33 @@ public class Type_Var  implements Initializable {
         }
 
         CommandCheck cc = new CommandCheck();
-        cc.OpCheck("Loop.txt",out,error);
+        cc.OpCheck(out,sout);
 
         if(if1 != null && cond != null && inCond != null){
-            appendStrToFile("test.txt", if1 );
-            appendStrToFile("IfElse.txt", if1 + " " + cond + "\n\t"+inCond + "\n");
+            appendStrToFile("test.txt", if1 +"\n" );
+            if(if1 == "if"){
+                appendStrToFile("IfElse.txt", if1 + " ifif " + cond + "\t@@ "+inCond + "\n");
+            }
+
+            else if(if1 == "else if"){
+                appendStrToFile("IfElse.txt", if1 + " elseif1 " + cond + "\t@@ "+inCond + "\n");
+            }
+
+            else if(if1 == "else"){
+                appendStrToFile("IfElse.txt", if1 + " else1 " + cond + "\t@@ "+inCond + "\n");
+            }
+
         }
 
         if(loop != null && comm != null){
-            appendStrToFile("test.txt",  loop );
+            appendStrToFile("test.txt",  loop + "\n" );
             appendStrToFile("ActualLoop.txt",  loop + "\t" + comm +"\n" );
 
         }
 
-        if (varName != null && s == null) {
+        if (!varName.isEmpty() && s == null) {
             //comb1.setOnAction(e -> error.setText(" Variable type is not declared "));
-            // error.setText(" Variable type is not declared ");
+             error.setText(" Variable type is not declared ");
         }
 
         else if (s != null && varName == null)
@@ -531,51 +555,6 @@ public class Type_Var  implements Initializable {
         {
             //out.setText("\n");
             out.appendText("");
-        }
-
-        else if (varName != null && s != null )
-        {
-            //comb2.getItems().add(var_name.getText());
-//            if(varNum == null){
-//                out.appendText("");
-//            }
-            if (value != null && !val) {
-                if (s == "int") {
-                    try {
-                        int check = Integer.parseInt(vaLue);
-                    } catch (NumberFormatException nfe) {
-                        error.setText("It's not an Integer Value.\nUse values like '5' not " + vaLue );
-                    }
-                }
-                else if (s == "float") {
-                    try {
-                        float check = Float.parseFloat(vaLue);
-                    } catch (NumberFormatException nfe) {
-                        error.setText("It's not a Float Value.\nUse values like '5.0' not " + vaLue);
-                    }
-                }
-                else if (s == "double") {
-                    try {
-                        double d = Double.parseDouble(vaLue);
-                    } catch (NumberFormatException nfe) {
-                        error.setText("It's not a Double Value.\nUse values like '5.000' not " + vaLue);
-                    }
-                }
-                else if (s == "char") {
-
-                    for(int i=0; i < s.length(); i++) {
-                        Boolean flag = Character.isDigit(s.charAt(i));
-                        if(flag) {
-                            //System.out.println("'"+ s.charAt(i)+"' is a number");
-                            error.setText("It's not a character \n It's a number");
-                        }
-                    }
-
-                }
-                else {
-                    System.out.println("void ");
-                }
-            }
         }
 
         boolean c = comment.isEmpty();
@@ -594,7 +573,9 @@ public class Type_Var  implements Initializable {
             long count = numOfLines("test.txt");
             FileReader fr=new FileReader("test.txt");
             BufferedReader br = new BufferedReader(fr);
-            AlgoCommand ac = new AlgoCommand();
+
+            boolean loopFlag = false;
+            String ss;
 
         for (int i = 1; i <= count; i++) {
                 try {
@@ -605,14 +586,37 @@ public class Type_Var  implements Initializable {
                                     str.contains("double") || str.contains("long") || str.contains("char")){
 
                                 VarNameCheck vr = new VarNameCheck();
-                                vr.checkVarName(varName,error);
-                                if(str.contains("char")){
+                                vr.checkVarName(varName,sout);
+                                if(str.contains("int")){
+                                    ss = ac.after(str,"int");
+                                    int1.add(ss);
+                                }
+                               else if(str.contains("float")){
+                                   ss = ac.after(str,"float");
+                                   float1.add(ss);
+                               }
+                               else if(str.contains("long")){
+                                   ss = ac.after(str,"long");
+                                   long1.add(ss);
+                               }
+                               else if(str.contains("char")){
+                                   ss = ac.after(str,"char");
+                                   char1.add(ss);
+                               }
 
-                                    out.appendText("\n" + str + " ;");
-                                }
-                                else{
-                                    out.appendText("\n" + str + " ;");
-                                }
+                                    if(varName == null || varName.isEmpty()){
+                                        error.setText(" Variable name is not declared ");
+                                    }
+                                    else{
+                                        ss = ac.after(str,"char");
+                                        if(str.contains("char") && char1.equals(ss)){
+
+                                            out.appendText("\n" + str + " ;");
+                                        }
+                                        else{
+                                        error.setText(" ");
+                                        out.appendText("\n" + str + " ;");}
+                                    }
 
 //                           if(str.contains(varName) ){
 //                               error.setText("Variable Name is already declared ");
@@ -640,19 +644,65 @@ public class Type_Var  implements Initializable {
 
                             else if(str.contains("=") && str.contains("var")){
                                 str = str.replace("var"," ");
-                                System.out.println("lalalala");
+                                //System.out.println("lalalala");
+                               String s1 = ac.after(str,"= ");
                                 out.appendText("\n" + str + " ;");
+                                  if (varName != null && s != null )
+                               {
+                                   //comb2.getItems().add(var_name.getText());
+//            if(varNum == null){
+//                out.appendText("");
+//            }
+                                   if (value != null && !val) {
+                                       if (s == "int") {
+                                           try {
+                                               int check = Integer.parseInt(vaLue);
+                                           } catch (NumberFormatException nfe) {
+                                               sout.setText("It's not an Integer Value.\nUse values like '5' not " + vaLue );
+                                           }
+                                       }
+                                       else if (s == "float") {
+                                           try {
+                                               float check = Float.parseFloat(vaLue);
+                                           } catch (NumberFormatException nfe) {
+                                               sout.setText("It's not a Float Value.\nUse values like '5.0' not " + vaLue);
+                                           }
+                                       }
+                                       else if (s == "double") {
+                                           try {
+                                               double d = Double.parseDouble(vaLue);
+                                           } catch (NumberFormatException nfe) {
+                                               sout.setText("It's not a Double Value.\nUse values like '5.000' not " + vaLue);
+                                           }
+                                       }
+                                       else if (s == "char" ) {
+                                           for(int j=0; j < s.length(); j++) {
+                                               Boolean flag = Character.isDigit(s.charAt(i));
+                                               if(flag) {
+                                                   //System.out.println("'"+ s.charAt(i)+"' is a number");
+                                                   sout.setText("It's not a character \n It's a number");
+                                               }
+                                           }
+
+                                       }
+                                       else {
+                                           System.out.println("void ");
+                                       }
+                                   }
+                               }
                             }
 
-                            else if (str.contains("if") || str.contains("else if") || str.contains("else")){
+                            else if ((str.contains("if") || str.contains("else if") || str.contains("else")) && loopFlag==false){
+                               loopFlag = true;
                                 If_ElseCommand ie = new If_ElseCommand();
                                 ie.If_else(if1,cond,inCond,error,out,stack);
                             }
 
-                            else if(str.contains("for ") || str.contains("while ") || str.contains("do while ") ){
-                                System.out.println("lalala))))))");
+                            else if((str.contains("for") || str.contains("while") || str.contains("do while")) && loopFlag==false){
+                                //System.out.println("lalala))))))");
+                               loopFlag = true;
                                 Loop lp = new Loop();
-                                lp.nestedLoop(loop,comm,out);
+                                 lp.nestedLoop(out,stack);
                             }
                             else{
                                 break;
@@ -688,7 +738,7 @@ public class Type_Var  implements Initializable {
 
 
     public void Algo_Conversion(String algo)throws IOException{
-
+        int dhur = 0;
         try{
             File file = new File("comment.txt");
             if (!file.exists()) {
@@ -718,8 +768,8 @@ public class Type_Var  implements Initializable {
                         while (i < count + 1) {
                             //stack.push(0);
                             AlgoCommand al = new AlgoCommand();
-                            al.AllCommand(br.readLine(),out,stack);
-                            // stack.clear();
+                            dhur = al.AllCommand(br.readLine(),out,stack);
+                            System.out.println(dhur + " lalalalala ");
                         }
 
 
@@ -730,6 +780,10 @@ public class Type_Var  implements Initializable {
             }
 
             System.out.println(stack);
+            while(!stack.empty()){
+                     stack.pop();
+                    out.appendText("\n  }");
+            }
 
     }
 
