@@ -1,6 +1,0 @@
-testCase(A)
- for j = 2 to A.length
-   for j = 2 to A.length
-     for j = 2 to A.length
-       print "abc"
-         b++

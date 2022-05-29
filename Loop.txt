@@ -1,6 +1,0 @@
-int a
-float b
-float c
-b = c*d*e op
-float c
-b = a+b*(c+d)*e op
