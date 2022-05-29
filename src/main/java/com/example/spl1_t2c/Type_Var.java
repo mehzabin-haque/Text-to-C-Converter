@@ -49,152 +49,6 @@ public class Type_Var  implements Initializable {
         }
 
     }
-    void inputFunction(String line)
-    {
-        String x = null;
-        //int i=7+algoIndent.top();
-        int i=0;
-        while(i<line.length())
-        {
-            while(i<line.length())
-            {
-                if(line.charAt(i)==',' || line.charAt(i)==')')
-                {
-                    i++;
-                    break;
-                }
-                else if(line.charAt(i)==' ')
-                    i++;
-                else
-                {
-                    // x.push_back(line[i]);
-                    i++;
-                }
-            }
-            if(i-x.length()-1==7)
-                out.appendText("cin << ");
-            else if(i!=line.length()-2)
-                out.appendText(">> " + x);
-        }
-        out.appendText(";\n");
-
-    }
-
-    void declareVariable(String line)
-    {
-        String variables;
-        int i=0;
-        String x;
-        while(line.charAt(i)!=' ')
-        {
-            out.appendText(String.valueOf(line.charAt(i)));
-        }
-        i++;
-        if(true)
-        {
-            while(i<line.length())
-            {
-                String var;
-                while(i<line.length() && line.charAt(i)!=',')
-                    out.appendText(String.valueOf(line.charAt(i)));
-                i++;
-            }
-
-            int j=0;
-            int it = 0;
-        }
-        return;
-    }
-
-    void statement(String line)
-    {
-        int i=0;
-
-        while(i<line.length())
-            out.appendText(String.valueOf(line.charAt(i)));
-        out.appendText(String.valueOf(line.charAt(i)));
-        return;
-    }
-    void printFunction(String line)
-    {
-        // while(sc.hasNextLine()) {
-
-//                                       for (int j = 0; j <= sc.nextLine().length(); j++) {
-//                                           if(count ==1){
-//                                               if (sc.nextLine().charAt(i) == '(') {
-//                                                   System.out.println("  ++++++++++++++++++ ");
-//                                                   out.appendText("\nvoid " + br.readLine());
-//                                                   out.appendText(sc.nextLine().replace(',',';'));
-//                                                   break;
-//
-//                                               }
-//                                           }
-//                                       }
-// break;
-// }
-//sc.close();
-//                               for(int i=0;i<algo.length();i++){
-//                                   if(algo.charAt(i) == '('){
-//                                       out.appendText(algo);
-//                                   }
-//                               }
-        int algoIndent;
-        //int i=7+algoIndent.top();
-        //code<<indent.top()<<"cout <<";\\
-        int i=0;
-        while(i<line.length())
-        {
-            if(line.charAt(i)=='"')
-            {
-                i++;
-                while(line.charAt(i)!='"')
-                    out.appendText(String.valueOf(line.charAt(i++)));
-                i++;
-            }
-            else if(line.charAt(i)==' ' || line.charAt(i)==',' || line.charAt(i)==')')
-            {
-                if(line.charAt(i)==',')
-
-                    i++;
-            }
-            else
-            {
-                while((line.charAt(i)>='a' && line.charAt(i)<='z')
-                        || (line.charAt(i)>='A' &&line.charAt(i)<='Z') ||line.charAt(i)=='_'
-                        || line.charAt(i)=='+' || line.charAt(i)=='-' || line.charAt(i)=='*'
-                        || line.charAt(i)=='/' || line.charAt(i)=='%' )
-                {
-                    out.appendText(String.valueOf(line.charAt(i)));
-                }
-            }
-
-        }
-        out.appendText(";\n");
-    }
-
-    void ifFunction(String line)
-    {
-        int i=0;
-        String c;
-        for(; i<line.length()-4; i++)
-        {
-            if(line.charAt(i)=='a' && line.charAt(i+1)=='n' && line.charAt(i+2)=='d')
-            {
-                c ="&&";
-                i+=2;
-            }
-            else if(line.charAt(i)=='o' && line.charAt(i+1)=='r')
-            {
-                c="||";
-                i+=1;
-            }
-        }
-        while(i<line.length())
-        {
-            c = String.valueOf(line.charAt(i+1));
-        }
-
-    }
 
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList<String> list = FXCollections.observableArrayList("int", "char", "float", "double");
@@ -714,6 +568,7 @@ public class Type_Var  implements Initializable {
         }
 
         out.appendText("\n return 0; \n}");
+        br.close();
     }
 
     public void Algo_Conversion2(String inp) {
@@ -735,7 +590,152 @@ public class Type_Var  implements Initializable {
         myWriter.append("\n"+inComm);
     }
 
+    void inputFunction(String line)
+    {
+        String x = null;
+        //int i=7+algoIndent.top();
+        int i=0;
+        while(i<line.length())
+        {
+            while(i<line.length())
+            {
+                if(line.charAt(i)==',' || line.charAt(i)==')')
+                {
+                    i++;
+                    break;
+                }
+                else if(line.charAt(i)==' ')
+                    i++;
+                else
+                {
+                    // x.push_back(line[i]);
+                    i++;
+                }
+            }
+            if(i-x.length()-1==7)
+                out.appendText("cin << ");
+            else if(i!=line.length()-2)
+                out.appendText(">> " + x);
+        }
+        out.appendText(";\n");
 
+    }
+
+    void declareVariable(String line)
+    {
+        String variables;
+        int i=0;
+        String x;
+        while(line.charAt(i)!=' ')
+        {
+            out.appendText(String.valueOf(line.charAt(i)));
+        }
+        i++;
+        if(true)
+        {
+            while(i<line.length())
+            {
+                String var;
+                while(i<line.length() && line.charAt(i)!=',')
+                    out.appendText(String.valueOf(line.charAt(i)));
+                i++;
+            }
+
+            int j=0;
+            int it = 0;
+        }
+        return;
+    }
+
+    void statement(String line)
+    {
+        int i=0;
+
+        while(i<line.length())
+            out.appendText(String.valueOf(line.charAt(i)));
+        out.appendText(String.valueOf(line.charAt(i)));
+        return;
+    }
+    void printFunction(String line)
+    {
+        // while(sc.hasNextLine()) {
+
+//                                       for (int j = 0; j <= sc.nextLine().length(); j++) {
+//                                           if(count ==1){
+//                                               if (sc.nextLine().charAt(i) == '(') {
+//                                                   System.out.println("  ++++++++++++++++++ ");
+//                                                   out.appendText("\nvoid " + br.readLine());
+//                                                   out.appendText(sc.nextLine().replace(',',';'));
+//                                                   break;
+//
+//                                               }
+//                                           }
+//                                       }
+// break;
+// }
+//sc.close();
+//                               for(int i=0;i<algo.length();i++){
+//                                   if(algo.charAt(i) == '('){
+//                                       out.appendText(algo);
+//                                   }
+//                               }
+        int algoIndent;
+        //int i=7+algoIndent.top();
+        //code<<indent.top()<<"cout <<";\\
+        int i=0;
+        while(i<line.length())
+        {
+            if(line.charAt(i)=='"')
+            {
+                i++;
+                while(line.charAt(i)!='"')
+                    out.appendText(String.valueOf(line.charAt(i++)));
+                i++;
+            }
+            else if(line.charAt(i)==' ' || line.charAt(i)==',' || line.charAt(i)==')')
+            {
+                if(line.charAt(i)==',')
+
+                    i++;
+            }
+            else
+            {
+                while((line.charAt(i)>='a' && line.charAt(i)<='z')
+                        || (line.charAt(i)>='A' &&line.charAt(i)<='Z') ||line.charAt(i)=='_'
+                        || line.charAt(i)=='+' || line.charAt(i)=='-' || line.charAt(i)=='*'
+                        || line.charAt(i)=='/' || line.charAt(i)=='%' )
+                {
+                    out.appendText(String.valueOf(line.charAt(i)));
+                }
+            }
+
+        }
+        out.appendText(";\n");
+    }
+
+    void ifFunction(String line)
+    {
+        int i=0;
+        String c;
+        for(; i<line.length()-4; i++)
+        {
+            if(line.charAt(i)=='a' && line.charAt(i+1)=='n' && line.charAt(i+2)=='d')
+            {
+                c ="&&";
+                i+=2;
+            }
+            else if(line.charAt(i)=='o' && line.charAt(i+1)=='r')
+            {
+                c="||";
+                i+=1;
+            }
+        }
+        while(i<line.length())
+        {
+            c = String.valueOf(line.charAt(i+1));
+        }
+
+    }
 
     public void Algo_Conversion(String algo)throws IOException{
         int dhur = 0;
