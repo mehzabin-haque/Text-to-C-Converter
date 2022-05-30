@@ -429,6 +429,7 @@ public class Type_Var  implements Initializable {
             BufferedReader br = new BufferedReader(fr);
 
             boolean loopFlag = false;
+            boolean ifFlag = false;
             String ss;
 
         for (int i = 1; i <= count; i++) {
@@ -546,8 +547,8 @@ public class Type_Var  implements Initializable {
                                }
                             }
 
-                            else if ((str.contains("if") || str.contains("else if") || str.contains("else")) && loopFlag==false){
-                               loopFlag = true;
+                            else if ((str.contains("if") || str.contains("else if") || str.contains("else")) && ifFlag==false){
+                               ifFlag = true;
                                 If_ElseCommand ie = new If_ElseCommand();
                                 ie.If_else(if1,cond,inCond,error,out,stack);
                             }
@@ -760,6 +761,7 @@ public class Type_Var  implements Initializable {
         BufferedReader br = new BufferedReader(fr);
             for (int i = 1; i <= count; i++) {
                 if (i == 1) {
+
                     out.appendText("\nvoid "+ br.readLine() + "{");
                 }
                 else {
