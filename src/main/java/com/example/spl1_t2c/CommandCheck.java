@@ -171,13 +171,13 @@ public class CommandCheck {
                     break;
                 }
         }
-        System.out.println(actual + "###@@@");
+       // System.out.println(actual + "###@@@");
         boolean bd = checkDuplicateUsingSet(actual);
         if(bd ){
           error.setText("Duplicate Variable name");
         }
 
-        System.out.println("trie content (*** indicates the end of a word): ");
+       // System.out.println("trie content (*** indicates the end of a word): ");
         tr.print();
         System.out.println();
 

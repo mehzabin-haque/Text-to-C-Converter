@@ -54,7 +54,7 @@ public class Operand {
                         || op.charAt(j) != '('|| op.charAt(j) != ')')){
                    // System.out.println(op.charAt(i));
                    // System.out.println(var_all.charAt(j));
-                    error.setText(" Undeclared variable has been used");
+                   // error.setText(" Undeclared variable has been used");
                    // System.out.println("-----------");
                     break;
                 }
