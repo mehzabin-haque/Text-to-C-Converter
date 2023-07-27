@@ -1,4 +1,4 @@
-# Project: Text-to-C++ Code Converter for Beginner Programmers
+## Project: Text-to-C++ Code Converter for Beginner Programmers
 
 
 ## Introduction
@@ -20,21 +20,21 @@ The Text-to-C++ Code Converter is a project aimed at assisting beginner programm
 - **Java**: The project is developed using Java programming language for its versatility and ease of use.
 
 - **JavaFX**: JavaFX is utilized for creating a user-friendly and visually appealing interface.
-- 
+  
 
 ## Learned Concepts and Implementation
 
-- **1. C++ Language Syntax**: The project extensively covers C++ language syntax and its various elements.
+**1. C++ Language Syntax**: The project extensively covers C++ language syntax and its various elements.
 
-- **2. File Read and Write**: File handling is incorporated to read user input commands and write the corresponding C++ code to output files.
+**2. File Read and Write**: File handling is incorporated to read user input commands and write the corresponding C++ code to output files.
 
-- **3. Lexical Analysis and Tokenization**: Techniques such as lexical analysis and tokenization are employed to process user input and transform it into C++ code.
+**3. Lexical Analysis and Tokenization**: Techniques such as lexical analysis and tokenization are employed to process user input and transform it into C++ code.
 
-- **4. TRIE Data Structure**: A TRIE data structure is utilized for efficient storage and retrieval of keys, such as strings, making command processing more efficient.
+**4. TRIE Data Structure**: A TRIE data structure is utilized for efficient storage and retrieval of keys, such as strings, making command processing more efficient.
 
-- **5. KMP Algorithm for String Matching**: The Knuth-Morris-Pratt (KMP) algorithm is applied for string matching operations, enhancing the project's performance.
+**5. KMP Algorithm for String Matching**: The Knuth-Morris-Pratt (KMP) algorithm is applied for string matching operations, enhancing the project's performance.
 
-- **6. Context-Free Grammar (CFG)**: CFG is employed to specify the syntax rules for processing user commands and generating valid C++ code.
+**6. Context-Free Grammar (CFG)**: CFG is employed to specify the syntax rules for processing user commands and generating valid C++ code.
 
 
 ## Usage
